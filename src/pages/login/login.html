@@ -4,10 +4,10 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header transparent>
+<!-- <ion-header transparent>
 	<ion-navbar transparent style="background: linear-gradient(to right, rgba(190,231,251, 0.4),rgba(0,174,239, 0.7));">
 	</ion-navbar>
-</ion-header>
+</ion-header> -->
 <ion-content class="bg-theme">
 	<div padding class="bg-color">
 		<ion-row text-center>
@@ -19,29 +19,34 @@
 			<ion-col col-12>
 				<ion-item class="label-font" style="background-color: transparent;color:white;padding-left:0px;">
 					<ion-label style="color:white" floating>Usuario</ion-label>
-					<ion-input type="text" (keyup.enter)="keytab($event)"></ion-input>
+					<ion-input type="text" [(ngModel)]="Email" (keyup.enter)="keytab($event)"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col col-12>
 				<ion-item class="label-font" style="background-color: transparent;color:white;padding-left:0px;">
 					<ion-label style="color:white" floating>Contraseña</ion-label>
-					<ion-input type="password" (keyup.enter)="keytab($event)"></ion-input>
+					<ion-input type="password" [(ngModel)]="Password" (keyup.enter)="keytab($event)"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col col-12 style="margin-top: 5%;">
-				<button ion-button  class="button-login" color="light" icon-start block outline (tap)="MoveToHome()">
+				<button ion-button  class="button-login" color="light" icon-start block outline (tap)="login()">
 					Login
+				</button>
+			</ion-col>
+			<ion-col col-12 style="margin-top: 5%;">
+				<button ion-button  class="button-login" color="light" icon-start block outline (tap)="register()">
+					Registrar
 				</button>
 			</ion-col>
 		</ion-row>
 		<ion-row padding style="margin-top:6%;">
 			<ion-col col-12>
-				<button ion-button class="loginBtn loginBtn--facebook" block>
+				<button ion-button class="loginBtn loginBtn--facebook" block (tap)="fblogin()">
 					Conectar con&nbsp;&nbsp;<b>FACEBOOK</b>
 				</button>
 			</ion-col>
 			<ion-col col-12>
-				<button ion-button class="loginBtn loginBtn--google" block>
+				<button ion-button class="loginBtn loginBtn--google" block (tap)="gpluslogin()">
 					Conectar con&nbsp;&nbsp;<b>GOOGLE+</b>
 				</button>
 			</ion-col>

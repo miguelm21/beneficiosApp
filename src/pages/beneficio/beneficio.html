@@ -9,7 +9,7 @@
 		<ion-col col-8 col-md-9 class="first-col">
 			<ion-row>
 				<ion-col col-1 col-md-3>
-					<button ion-button clear  color="light" (tap)="MoveToBack()">
+					<button ion-button clear color="light" (click)="back()">
 						<ion-icon name="arrow-back"></ion-icon>
 					</button>
 				</ion-col>
@@ -30,17 +30,14 @@
 		<ion-row class="row-modal">
 			<ion-col col-12>
 				<ion-thumbnail class="tumb-img" item-start>
-					<h3 class="title-offer" text-center>Oferta 1</h3>
-					<img class="img-beneficio" src="assets/imgs/burger-icon.png" #myImage (click)="presentImage(myImage)"><p class="text-offert" text-justify>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem vitae fugiat veritatis sit non, hic at tempore natus aut perspiciatis deleniti similique officia sed veniam ullam ducimus ipsam quod. Praesentium!</p>
+					<h3 class="title-offer" text-center>{{ benefit?.name }}</h3>
+					<img class="img-beneficio" src="data:image/png;base64,{{ benefit?.image }}" #myImage (click)="presentImage(myImage)"><p class="text-offert" text-justify>{{ benefit?.description }}</p>
 				</ion-thumbnail>
 			</ion-col>
-			<ion-row class="row-map">
-				<div class="contenedor-map">
-					<div text-center #map id="map">
-					</div>
-					<div style="display:none;"></div>
-				</div>
-			</ion-row>
 		</ion-row>
+	</div>
+	<div class="contenedor-map">
+		<div text-center #map id="map"></div>
+		<div style="display:none;"></div>
 	</div>
 </ion-content>

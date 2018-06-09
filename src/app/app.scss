@@ -1,5 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
 @font-face {
   font-family: Acme;
   src: url('../assets/fonts/acme.woff2');
@@ -34,6 +33,9 @@ page-noticia ion-toolbar.scrollable-segments ion-segment ion-segment-button.segm
     display: inline-block;
     width: 35%;
     height: 60px;
+}
+ion-auto-complete {
+  width: 50vw;
 }
 @media only screen and (min-width: 993px) and (max-width: 1200px){
  .menu-o {
@@ -167,3 +169,5 @@ page-noticia ion-toolbar.scrollable-segments ion-segment ion-segment-button.segm
 .header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before{
     display:none;
 }
+
+@import "../../node_modules/ionic2-auto-complete/auto-complete";

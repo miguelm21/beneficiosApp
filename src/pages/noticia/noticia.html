@@ -9,7 +9,7 @@
 		<ion-col col-8 col-md-9 class="first-col">
 			<ion-row>
 				<ion-col col-1 col-md-3>
-					<button ion-button clear  color="light" (tap)="MoveToHome()">
+					<button ion-button clear color="light" (tap)="home()">
 						<ion-icon name="arrow-back"></ion-icon>
 					</button>
 				</ion-col>
@@ -30,16 +30,16 @@
 	<ion-col col-12 class="cold-card-novedades">
 		<ion-card>
 			<!-- Title Card -->
-			<h2 class="title-card-novedades">Titulo</h2>
+			<h2 class="title-card-novedades">{{ title }}</h2>
 			<!-- Title Card end -->
 			<!-- Text Preview -->
 			<ion-card-content>
-				<p class="text-noticia" text-justify>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
+				<span class="text-noticia" text-justify [innerHTML]="text"></span>
 				<!-- Text Preview End -->
 				<!-- Img Noticia Section -->
-				<div  class="container-novedades" text-center (tap)="MoveToNoticia()">
-					<img class="img-noticias" src="assets/imgs/noticia-imagen.jpg" alt="Imagen Principal">
-					<p class="title-background text-autor-novedades">Luis Ortega</p>
+				<div  class="container-novedades" text-center>
+					<img class="img-noticias" [src]="image" alt="Imagen Principal">
+					<p class="title-background text-autor-novedades">{{ user }}</p>
 					<!-- Img Noticia End -->
 				</div>
 				<!-- Social Section -->

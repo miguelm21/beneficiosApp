@@ -5,11 +5,9 @@ import { Http, Headers } from '@angular/http';
 import { Storage } from "@ionic/storage";
 
 import { LoginPage } from '../login/login';
-import { EditperfilPage } from '../editperfil/editperfil';
-import { PasswordPage } from '../password/password';
 
 /**
- * Generated class for the PerfilPage page.
+ * Generated class for the SaveBenefitsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -17,34 +15,34 @@ import { PasswordPage } from '../password/password';
 
 @IonicPage()
 @Component({
-  selector: 'page-perfil',
-  templateUrl: 'perfil.html',
+  selector: 'page-save-benefits',
+  templateUrl: 'save-benefits.html',
 })
-export class PerfilPage {
+export class SaveBenefitsPage {
   _imageViewerCtrl: ImageViewerController;
-  profile: Object[];
+  benefits: Object[];
   token;
 
   api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
 
   constructor(
-    public navCtrl: NavController,
+  	public navCtrl: NavController,
     public navParams: NavParams,
-    public menuCtrl: MenuController,
-    imageViewerCtrl: ImageViewerController,
-    public storage: Storage,
-    public toastCtrl: ToastController,
     private http: Http,
+    public toastCtrl: ToastController,
+    imageViewerCtrl: ImageViewerController,
+    public menuCtrl: MenuController,
+    public storage: Storage,
     public loadingCtrl: LoadingController) {
-       this._imageViewerCtrl = imageViewerCtrl; 
   }
 
   ionViewDidLoad() {
-    this.menuCtrl.close();
+  	this.menuCtrl.close();
+    /*console.log('ionViewDidLoad SaveBenefitsPage');*/
   }
 
   ionViewWillEnter() {
-    this.storage.get('token').then( data => {
+  	this.storage.get('token').then( data => {
       if(data != null) {
         if(data == 'token_expired') {
           this.navCtrl.setRoot(LoginPage);
@@ -58,14 +56,13 @@ export class PerfilPage {
         else {
           this.token = 'Bearer' + data;
           var token = 'Bearer' + data;
-          this.getProfile(token);
+          this.getBenefits(token);
         }
       }
     });
-    
   }
 
-  getProfile(token) {
+  getBenefits(token) {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: '<img src="../../assets/spinner3.gif"/>'
@@ -73,15 +70,16 @@ export class PerfilPage {
 
     loading.present();
     let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('X-Requested-With', 'XMLHttpRequest');
+    /*headers.append('Content-Type', 'application/json');
+    headers.append('X-Requested-With', 'XMLHttpRequest');*/
     headers.append('Authorization', token);
 
-    this.http.get(this.api + 'me/', { headers: headers })
+    this.http.get(this.api + 'savebenefits', { headers: headers })
       .map(res => res.json())
       .subscribe(
         data => {
-          this.profile = data;
+          this.benefits = data.userbenefits.data;
+          console.log(data.userbenefits.data);
           loading.dismiss();
         },
         err => {
@@ -106,14 +104,6 @@ export class PerfilPage {
   	this.navCtrl.popToRoot();
   }
 
-  EditProfile(){
-    this.navCtrl.push(EditperfilPage, { profile: this.profile, token: this.token });
-  }
-
-  ChangePassword(){
-    this.navCtrl.push(PasswordPage, { profile: this.profile, token: this.token } );
-  }
-
   toast(message) {
     let toast = this.toastCtrl.create({
       message: message,
@@ -125,5 +115,3 @@ export class PerfilPage {
   }
 
 }
-
-

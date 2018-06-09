@@ -8,8 +8,9 @@
 	<ion-navbar transparent style="background: linear-gradient(to right, rgba(190,231,251, 0.4),rgba(0,174,239, 0.7));">
 	</ion-navbar>
 </ion-header>
+
 <ion-content class="bg-theme">
-	<div padding class="bg-color"  style="height: auto;">
+	<div padding class="bg-color" style="height: auto;">
 		<ion-row text-center>
 			<ion-col col-12>
 				<img style="width: 50%;" src="assets/imgs/logo-club.png">
@@ -19,30 +20,65 @@
 			<ion-col col-12>
 				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
 					<ion-label style="color:white" floating>Nombre</ion-label>
-					<ion-input type="text" (keyup.enter)="keytab($event)"></ion-input>
+					<ion-input type="text" [(ngModel)]="Name" (keyup.enter)="keytab($event)"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col col-12>
+				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
+					<ion-label style="color:white" floating>DNI</ion-label>
+					<ion-input type="text" [(ngModel)]="Dni" (keyup.enter)="keytab($event)"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col col-12>
 				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
 					<ion-label style="color:white" floating>Email</ion-label>
-					<ion-input type="text" (keyup.enter)="keytab($event)"></ion-input>
+					<ion-input type="text" [(ngModel)]="Email" (keyup.enter)="keytab($event)"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col col-12>
+				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
+					<ion-label style="color:white" floating>Telefono</ion-label>
+					<ion-input type="text" [(ngModel)]="Phone" (keyup.enter)="keytab($event)"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col col-12>
+				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
+					<ion-label style="color:white" floating>Provincia</ion-label>
+					<ion-input type="text" [(ngModel)]="Province" (keyup.enter)="keytab($event)"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col col-12>
+				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
+					<ion-label style="color:white" floating>Ciudad</ion-label>
+					<ion-input type="text" [(ngModel)]="City" (keyup.enter)="keytab($event)"></ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col col-12>
+				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
+					<ion-label style="color:white" floating>Domicilio</ion-label>
+					<ion-input type="text" [(ngModel)]="Domicile" (keyup.enter)="keytab($event)"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col col-12>
 				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
 					<ion-label style="color:white" floating>Contraseña</ion-label>
-					<ion-input type="password" (keyup.enter)="keytab($event)"></ion-input>
+					<ion-input type="password" [(ngModel)]="Password" (keyup.enter)="keytab($event)"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col col-12>
 				<ion-item style="background-color: transparent;color:white;padding-left:0px;">
 					<ion-label style="color:white" floating>Confirmación de Contraseña</ion-label>
-					<ion-input type="password" (keyup.enter)="keytab($event)"></ion-input>
+					<ion-input type="password" [(ngModel)]="Password_confirmation" (keyup.enter)="keytab($event)"></ion-input>
 				</ion-item>
 			</ion-col>
 			<ion-col col-12 style="margin-top: 5%;">
-				<button ion-button color="light" style="height: 42px;font-size:1.8rem;" icon-start block outline>
+				<button ion-button color="light" style="height: 42px;font-size:1.8rem;" (tap)="register()" icon-start block outline>
 					Registrar
+				</button>
+			</ion-col>
+			<ion-col col-12 style="margin-top: 5%;">
+				<button ion-button color="light" style="height: 42px;font-size:1.8rem;" (tap)="login()" icon-start block outline>
+					Login
 				</button>
 			</ion-col>
 		</ion-row>

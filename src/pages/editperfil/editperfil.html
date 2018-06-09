@@ -32,29 +32,43 @@
 		</ion-col>
 		<ion-col col-12 text-center class="contenedor-card-perfil">
 			<div class="container">
-				<h2 text-center class="font-perfil" style="font-family:Monserrat;color:white;">Editar Perfil de Usuario</h2>
-				<img class="pantalla-1" src="assets/imgs/userperfil.png" alt="Imagen Principal">
+				<h1 text-center class="font-perfil" style="font-family:Monserrat;color:white;">Editar Perfil de Usuario</h1>
+				<!-- <img class="pantalla-1" src="assets/imgs/userperfil.png" alt="Imagen Principal"> -->
 			</div>
+		</ion-col>
+		<ion-col col-12 text-center style="margin-top:20%">
+			<ion-item style="padding-left:40px;padding-right: 40px;">        
+				<ion-label><ion-icon name="create"></ion-icon></ion-label>
+				<ion-input [(ngModel)]="Name" type="text"></ion-input>
+			</ion-item>
+			<ion-item style="padding-left:40px;padding-right: 40px;">        
+				<ion-label><ion-icon name="contact"></ion-icon></ion-label>
+				<ion-input [(ngModel)]="Dni" type="text"></ion-input>
+			</ion-item>
 		</ion-col>
 		<ion-col col-12 text-center>
 			<ion-item style="padding-left:40px;padding-right: 40px;">        
-				<ion-label><ion-icon name="create"></ion-icon></ion-label>
-				<ion-input  type="text"></ion-input>
+				<ion-label><ion-icon name="call"></ion-icon></ion-label>
+				<ion-input [(ngModel)]="Phone" type="text"></ion-input>
 			</ion-item>
 			<ion-item style="padding-left:40px;padding-right: 40px;">        
-				<ion-label><ion-icon name="mail"></ion-icon></ion-label>
-				<ion-input  type="text"></ion-input>
+				<ion-label><ion-icon name="pin"></ion-icon></ion-label>
+				<ion-input [(ngModel)]="Province" type="text"></ion-input>
 			</ion-item>
 		</ion-col>
 		<ion-col col-12 text-center>
 			<ion-item style="padding-left:40px;padding-right: 40px;">        
 				<ion-label><ion-icon name="pin"></ion-icon></ion-label>
-				<ion-input  type="text"></ion-input>
+				<ion-input [(ngModel)]="City" type="text"></ion-input>
+			</ion-item>
+			<ion-item style="padding-left:40px;padding-right: 40px;">        
+				<ion-label><ion-icon name="pin"></ion-icon></ion-label>
+				<ion-input [(ngModel)]="Domicile" type="text"></ion-input>
 			</ion-item>
 		</ion-col>
 		<ion-row text-center class="row-button-cambio" style="padding: 50px;">
 			<ion-col col-12>
-				<button ion-button class="loginBtn loginBtn--Perfil">
+				<button ion-button class="loginBtn loginBtn--Perfil" (tap)="UpdateProfile()">
 					Guardar Cambios
 				</button>
 			</ion-col>

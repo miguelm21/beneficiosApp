@@ -1,18 +1,20 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, Platform, NavController, NavParams, MenuController, ToastController, AlertController } from 'ionic-angular';
 import { ImageViewerController } from 'ionic-img-viewer';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Slides, LoadingController} from 'ionic-angular';
+import { Storage } from "@ionic/storage";
+import { OneSignal, OSNotificationPayload } from '@ionic-native/onesignal';
 import 'rxjs/add/operator/map'
 
-
-
+import { CategoryPage } from '../category/category';
+import { NoticiaPage } from '../noticia/noticia';
+import { BeneficioPage } from '../beneficio/beneficio';
 
 declare var google;
 declare var map;
-
 
 /**
  * Generated class for the HomePage page.
@@ -37,252 +39,539 @@ declare var map;
      latitude;
      longitude;
 
+     api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
 
+     token;
+     Checkbox: any[] = [];
+     Km;
+     Pos;
+     show;
 
-     constructor(public navCtrl: NavController,public navParams: NavParams,private http: Http,imageViewerCtrl: ImageViewerController,public loadingCtrl: LoadingController, public menuCtrl: MenuController,private locationAccuracy: LocationAccuracy, public geolocation: Geolocation) {
-         let localData = http.get('assets/information.json').map(res => res.json().items);
-         localData.subscribe(data => {
-             this.information = data;
-         });
-         this._imageViewerCtrl = imageViewerCtrl; 
-         this.parameter1 = navParams.get('param1'); 
-         this.parameter1 = this.navParams.get('param1');
+     items;
+     showList = false;
 
-         if(this.parameter1)
-         {
-             this.section = this.parameter1;
-         }
-         else
-         {
-             this.section = '1';
-         }   
-     }
+     categories: Object[];
+     benefs: Array<any>;
+     benefits: Object[];
+     news: Array<any>;
+     news2: any[] = [];
 
-     ionViewWillEnter() {
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        private http: Http,
+        public imageViewerCtrl: ImageViewerController,
+        public loadingCtrl: LoadingController,
+        public menuCtrl: MenuController,
+        private locationAccuracy: LocationAccuracy,
+        private alertCtrl: AlertController,
+        public toastCtrl: ToastController,
+        private platform: Platform,
+        private oneSignal: OneSignal,
+        public geolocation: Geolocation) {
+            platform.ready().then(() => {    
+                this.platform.pause.subscribe(() => {
+                    console.log('[INFO] App paused');
+                    
+                });
+
+                this.platform.resume.subscribe(() => {
+                    console.log('[INFO] App resumed');
+                });
+            });
+
+            let localData = http.get('assets/information.json').map(res => res.json().items);
+                localData.subscribe(data => {
+                this.information = data;
+            });
+            this._imageViewerCtrl = imageViewerCtrl; 
+            this.parameter1 = navParams.get('param1'); 
+            this.parameter1 = this.navParams.get('param1');
+
+            if(this.parameter1)
+            {
+                this.section = this.parameter1;
+            }
+            else
+            {
+                this.section = '1';
+            }   
+    }
+
+    ionViewWillEnter() {
        this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-         if(canRequest) {
-        // the accuracy option will be ignored by iOS
-        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-          () => console.log('Request successful'),
-          error => console.log('Error requesting location permissions', error)
-          );
-      }
-    });
-       this.initMap();
-       console.log('ionViewDidLoad HomePage' + this.parameter1);
-     }
+             if(canRequest) {
+            // the accuracy option will be ignored by iOS
+            this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+              () => console.log('Request successful'),
+              error => console.log('Error requesting location permissions', error)
+              );
+          }
+        });
+        this.token = 'Bearer' + this.navParams.get('token');
+        this.Pos = this.getLocation();
+        this.getLocation();
+        this.getMapData();
+        /*this.handlerNotifications();*/
+        this.SendData();
+        /*this.SendMessage();*/
 
+        setInterval(() => { this.getLocation(); this.getMapData(); }, 15000);
+    }
      
-     ionViewDidLoad() {
-       let loading = this.loadingCtrl.create({
-         spinner: 'hide',
-         content: '<img src="../../assets/spinner3.gif"/>'
-       });
-       loading.present();
-       loading.dismiss();
-       this.menuCtrl.close();
-       this.initMap();
+    ionViewDidLoad() {
+        this.menuCtrl.close();
      }
 
- toggleSection(i) {
-    this.information[i].open = !this.information[i].open;
-  }
+     initializeItems() {
+        this.items = [
+          'Amsterdam',
+          'Bogota',
+        ]
+      }
+
+    getItems(ev: any) {
+        // Reset items back to all of the 
+        this.initializeItems();
+
+        // set val to the value of the searchbar
+        let val = ev.target.value;
+        console.log(val);
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+          this.showList = true;
+          this.items = this.items.filter((item) => {
+            return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          })
+        }
+        else if(!val || val == undefined) {
+            this.showList = false;
+        }
+    }
+
+    hiddenList(ev: any) {
+        this.showList = false;
+    }
+
+    toggleSection(i) {
+      this.information[i].open = !this.information[i].open;
+    }
  
-  toggleItem(i, j) {
-    this.information[i].children[j].open = !this.information[i].children[j].open;
-  };
+    toggleItem(i, j) {
+      this.information[i].children[j].open = !this.information[i].children[j].open;
+    };
+
+    getMapData() {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
+
+        this.http.get(this.api + 'map', { headers: headers })
+          .map(res => res.json())
+          .subscribe(
+            data => { 
+                this.categories = data.categories;
+                this.benefs = data.benefs;
+                this.benefits = data.benefits;
+                this.news = data.news;
+
+                var n = [];
+                this.news.forEach((data) => {
+                    var monthNames = [
+                        "Ene", "Feb", "Mar",
+                        "Abr", "May", "Jun", "Jul",
+                        "Ago", "Sep", "Oct",
+                        "Nov", "Dic"
+                    ];
+
+                    var date = new Date(data.date);
+
+                    var day = date.getDate();
+                    var monthIndex = date.getMonth();
+                    var year = date.getFullYear();
+
+                    var date2 = day + ' ' + monthNames[monthIndex];
+
+                    this.news2.push({ id: data.id, title: data.title, text: data.text, image: data.image, mime: data.mime, size: data.size, user: data.user, day: day, month: monthNames[monthIndex] })
+                });
+
+                this.initMap(this.benefs,this.latitude, this.longitude); },
+            err => {
+              if (err.status == 401){
+                this.toast('No se encontraron datos');
+              } else if (err.status == 500) {
+                this.toast('Ocurrio un error');
+              } else {
+                this.toast('Ocurrio un error');
+              }
+            },
+          );
+    }
+
+    getLocation() {
+        this.geolocation.getCurrentPosition().then((position) => {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;            
+            return position.coords;
+        }).catch((error) => {
+          console.log('Error getting location');
+      });
+    }
   
-  initMap() {
-/*  this.geolocation.getCurrentPosition().then((position) => {
-    this.latitude = position.coords.latitude;
-    this.longitude  =position.coords.longitude;
+    initMap(benefits, latitude, longitude) {
+        let markers = [];
+        var Centro = { lat: latitude, lng: longitude };
 
-    alert(this.latitude);
-    alert(this.longitude);*/
-    
-    var Gastronomia = {lat: -32.899569, lng: -68.846949};
-    var Entretenimiento = {lat: -32.879569, lng: -68.816949};
-    var Turismo = {lat: -32.909569, lng: -68.876949};
-    var Moda = {lat: -32.879569, lng: -68.876949};
-    var Belleza = {lat: -32.909569, lng: -68.816949};
-    var Hogar = {lat: -32.869569, lng: -68.846949};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: Centro,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
 
-    var Centro = {lat: -32.889459, lng: -68.845839}; 
-/*
-    var Lat = this.latitude;
-    var Lng = this.longitude;*/
-/*
-var latlng = {lat: Lat, lng: Lng};*/
+        var marker = new google.maps.Marker({
+          position: Centro,
+          map: map
+        });
+        markers.push(marker);
 
-    //let latLng = new google.maps.LatLng(lat: -32.889459, lng: -68.845839);
+        if(Object.keys(benefits).length <= 0) {
+            this.show = 0;
+        }
+        else if (Object.keys(benefits).length >= 1) {
+            this.show = 1;
+        }
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        center: Centro,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
+        benefits.forEach(data => {
+            var contentString = 
+            '<div class="container">' +
+                '<img class="card-img-top" height="30px" src="data:image/png;base64,' + data.image +'" alt="map-image' + data.id + '">' +
+                '<div class="card-body">' +
+                  '<h5 class="box-panel-closest__title">' + data.name  +'</h5>' +
+                  '<p class="box-panel-closest__text">' + data.description +'</p>' +
+                '<a href="' + data.id +'" class="btn button-style pull-right">Ver más</a>' +
+                '</div>' +
+            '</div>';
 
-    //InforWindows
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
 
-    var contentString = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h3 id="firstHeading" class="firstHeading">Gastronomia</h3>'+
-    '<div id="bodyContent">'+
+            var marker = new google.maps.Marker({
+                position: { lat: data.latitude, lng: data.longitude },
+                map: map,
+                icon: data.iconmap,
+                title: data.name
+            });
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+            markers.push(marker);
+        });
+;
+        this.setMapOnAll(map, markers);
+    }
 
-    '</div>'+
-    '</div>';
+    filterCategoryMap(id, e) {
+        var benef = [];
+        if(e.checked)
+        {
+            this.Checkbox.push(id);
+        }
+        else
+        {
+            var index = this.Checkbox.indexOf(id);
+            this.Checkbox.splice(index, 1);
+        }
 
-    var contentString2 = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h3 id="firstHeading" class="firstHeading">Entretenimiento</h3>'+
-    '<div id="bodyContent">'+
+        if(typeof this.Checkbox !== 'undefined' && this.Checkbox.length > 0)
+        {
+            if(this.Km) {
+                var ben = [];
 
-    '</div>'+
-    '</div>';
+                benef.forEach((data) => {
+                    var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+                    if(this.Km < 1) {
+                        ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+                        this.Km = 1;
+                    }
 
-    var contentString3 = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h3 id="firstHeading" class="firstHeading">Turismo</h3>'+
-    '<div id="bodyContent">'+
+                    if(distance <= this.Km) {
+                        ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+                    }
+                });
+                if(this.Km < 1) {
+                    this.initMap(ben, this.latitude, this.longitude);
+                    this.benefits = ben;
+                }
+                this.initMap(ben, this.latitude, this.longitude);
+                this.benefits = ben;
+            }
+            else {
+                var ben = []
+                benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
 
-    '</div>'+
-    '</div>';
+                var key = benef.shift();
+                this.initMap(key, this.latitude, this.longitude);
+                this.benefits = key;
+            }
+        }
+        else
+        {
+            this.initMap(this.benefs, this.latitude, this.longitude);
+            this.benefits = this.benefs;
+            console.log(this.benefs);
+        }
+    }
 
-    var contentString4 = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h3 id="firstHeading" class="firstHeading">Moda</h3>'+
-    '<div id="bodyContent">'+
+    filterKmMap(latitude, longitude) {
+        if(typeof this.Checkbox !== 'undefined' && this.Checkbox.length > 0)
+        {
+            var benef = [];
+            benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
 
-    '</div>'+
-    '</div>';
+            if(this.Km) {
+                var ben = [];
+                var key = benef.shift();
 
-    var contentString5 = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h3 id="firstHeading" class="firstHeading">Belleza</h3>'+
-    '<div id="bodyContent">'+
+                key.forEach((data) => {
+                    var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+                    if(this.Km < 1) {
+                        ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+                        this.Km = 1;
+                    }
 
-    '</div>'+
-    '</div>';
+                    if(distance <= this.Km) {
+                        ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+                    }
+                });
+                if(this.Km < 1) {
+                    this.initMap(key, this.latitude, this.longitude);
+                    this.benefits = key;
+                }
+                console.log(ben);
+                this.initMap(ben, this.latitude, this.longitude);
+                this.benefits = ben;
+            }
+            else {
+                var keys = benef.shift();
+                var ben = [];
 
-    var contentString6 = '<div id="content">'+
-    '<div id="siteNotice">'+
-    '</div>'+
-    '<h3 id="firstHeading" class="firstHeading">Deco y Hogar</h3>'+
-    '<div id="bodyContent">'+
+                keys.forEach((data) => {
+                    ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+                });
+                this.initMap(ben, this.latitude, this.longitude);
+                this.benefits = ben;
+            }
+        }
+        else
+        {
+            if(this.Km)
+            {
+                var ben = [];
 
-    '</div>'+
-    '</div>';
+                this.benefs.forEach((data) => {
+                    var distance = this.calculateDistance(this.latitude, this.longitude, data['latitude'], data['longitude']);
+                    if(this.Km < 1) {
+                        this.Km = 1;
+                        this.initMap(this.benefs, this.latitude, this.longitude);
+                    }
 
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
+                    if(distance <= this.Km) {
+                        ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+                    }
+                });
 
-    var infowindow2 = new google.maps.InfoWindow({
-        content: contentString2
-    });
+                this.initMap(ben, this.latitude, this.longitude);
+                this.benefits = ben;
+            }
+            else
+            {
+                this.initMap(this.benefs, this.latitude, this.longitude);
+                this.benefits = this.benefs
+            }
+        }
+    }
 
-    var infowindow3 = new google.maps.InfoWindow({
-        content: contentString3
-    });
+    setMapOnAll(map, markers) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+    }
 
-    var infowindow4 = new google.maps.InfoWindow({
-        content: contentString4
-    });
+    clearMarkers() {
+        this.setMapOnAll(null, null);
+    }
 
-    var infowindow5 = new google.maps.InfoWindow({
-        content: contentString5
-    });
+    deleteMarkers(markers) {
+        this.clearMarkers();
+        markers = [];
+    }
 
-    var infowindow6 = new google.maps.InfoWindow({
-        content: contentString6
-    });
+    calculateDistance(lat1, long1, lat2, long2) {
+        var km = 111.302;
+            
+        //1 Grado = 0.01745329 Radianes    
+        var degtorad = 0.01745329;
+        
+        //1 Radian = 57.29577951 Grados
+        var radtodeg = 57.29577951; 
+        //La formula que calcula la distancia en grados en una esfera, llamada formula de Harvestine. Para mas informacion hay que mirar en Wikipedia
+        //http://es.wikipedia.org/wiki/F%C3%B3rmula_del_Haversine
+        var dlong = (long1 - long2);
+        var dvalue = (Math.sin(lat1 * degtorad) * Math.sin(lat2 * degtorad)) + (Math.cos(lat1 * degtorad) * Math.cos(lat2 * degtorad) * Math.cos(dlong * degtorad)); 
+        var dd = Math.acos(dvalue) * radtodeg; 
+        return Math.round((dd * km));
+    }
 
-    //Markers
-    var marker = new google.maps.Marker({
-        position: Gastronomia,
-        map: map,
-        "icon": 'https://icon-icons.com/icons2/1151/PNG/32/1486505264-food-fork-kitchen-knife-meanns-restaurant_81404.png',
-        title: ''
-    });
-    marker.addListener('click', function() {
-        infowindow.open(map, marker);
-    });
+    PostBenefit(id) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
 
-    var marker2 = new google.maps.Marker({
-        position: Entretenimiento,
-        map: map,
-        icon: "https://icon-icons.com/icons2/1149/PNG/32/1486504374-clip-film-movie-multimedia-play-short-video_81330.png",
-        title: ''
-    });
-    marker2.addListener('click', function() {
-        infowindow2.open(map, marker2);
-    });
+        var credentials = JSON.stringify({ id: id });
+        this.http.post(this.api + 'postbenefit/', credentials, { headers: headers })
+          .map(res => res.json())
+          .subscribe(
+            data => { this.toast('Beneficio Guardado'); this.getMapData() },
+            err => {
+              if (err.status == 401){
+                this.toast('Error al guardar el Beneficio');
+              } else if (err.status == 500) {
+                this.toast('Ocurrio un error');
+              } else {
+                this.toast('Ocurrio un error');
+              }
+            },
+          );
+    }
 
-    var marker3 = new google.maps.Marker({
-        position: Turismo,
-        map: map,
-        icon: "https://icon-icons.com/icons2/1146/PNG/32/1486485566-airliner-rplane-flight-launch-rbus-plane_81166.png",
-        title: ''
-    });
-    marker3.addListener('click', function() {
-        infowindow3.open(map, marker3);
-    });
+    UnpostBenefit(id) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
 
-    var marker4 = new google.maps.Marker({
-        position: Moda,
-        map: map,
-        icon: "https://icon-icons.com/icons2/197/PNG/32/scissors_24029.png",
-        title: ''
-    });
-    marker4.addListener('click', function() {
-        infowindow4.open(map, marker4);
-    });
+        this.http.delete(this.api + 'unpostbenefit/' + id, { headers: headers })
+          .map(res => res.json())
+          .subscribe(
+            data => { this.toast('Beneficio Borrado'); this.getMapData() },
+            err => {
+              if (err.status == 401){
+                this.toast('Error al borrar el Beneficio');
+              } else if (err.status == 500) {
+                this.toast('Ocurrio un error');
+              } else {
+                this.toast('Ocurrio un error');
+              }
+            },
+          );
+    }
 
-    var marker5 = new google.maps.Marker({
-        position: Belleza,
-        map: map,
-        icon: "https://icon-icons.com/icons2/1130/PNG/32/womaninacircle_80046.png",
-        title: ''
-    });
-    marker5.addListener('click', function() {
-        infowindow5.open(map, marker5);
-    });
+    SendData() {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
 
-    var marker6 = new google.maps.Marker({
-        position: Hogar,
-        map: map,
-        icon: "https://icon-icons.com/icons2/1151/PNG/32/1486505259-estate-home-house-building-property-real_81428.png",
-        title: ''
-    });
-    marker6.addListener('click', function() {
-        infowindow6.open(map, marker6);
-    });
+        /*var credentials = JSON.stringify({ data: this.benefs });*/
+        this.http.post(this.api + 'registerPush', {}, { headers: headers })
+          .map(res => res.json())
+          .subscribe(
+            data => { console.log(data.response); },
+            err => {
+              if (err.status == 401){
+                this.toast('Error al enviar informacion');
+              } else if (err.status == 500) {
+                this.toast('Ocurrio un error');
+              } else {
+                this.toast('Ocurrio un error');
+              }
+            },
+          );
+    }
 
-/*  }).catch((error) => {
-      alert('Error getting location');
-  });*/
-}
+    SendMessage() {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
 
-MoveToCategory(){
-    this.navCtrl.push('CategoryPage');
-}
-MoveToNoticia(){
-    this.navCtrl.push('NoticiaPage');
-}
+        /*var credentials = JSON.stringify({ data: this.benefs });*/
+        this.http.post(this.api + 'sendMessage', {}, { headers: headers })
+          .map(res => res.json())
+          .subscribe(
+            data => { console.log(data.allresponses.id) },
+            err => {
+              if (err.status == 401){
+                this.toast('Error al enviar informacion');
+              } else if (err.status == 500) {
+                this.toast('Ocurrio un error');
+              } else {
+                this.toast('Ocurrio un error');
+              }
+            },
+          );
+    }
 
-GoToBeneficio(){
-    this.navCtrl.push('BeneficioPage');
-}
+    category(id) {
+        this.navCtrl.push(CategoryPage, { id: id, token: this.token });
+    }
 
+    article(id){
+        this.navCtrl.push(NoticiaPage, { id: id, token: this.token });
+    }
 
-presentImage(myImage) {
-    const imageViewer = this._imageViewerCtrl.create(myImage);
-    imageViewer.present();
-}
+    benefit(id){
+        this.navCtrl.push(BeneficioPage, {id: id, token: this.token });
+    }
 
+    presentImage(myImage) {
+        const imageViewer = this._imageViewerCtrl.create(myImage);
+        imageViewer.present();
+    }
+
+    toast(message) {
+        let toast = this.toastCtrl.create({
+          message: message,
+          duration: 3000,
+          position: 'bottom'
+        });
+
+        toast.present();
+    }
+
+    pushNotification() {
+        this.oneSignal.startInit('876b6875-5142-4bb5-a1b5-7b585341e078', '146169855521');
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+        this.oneSignal.handleNotificationReceived().subscribe(data => this.onPushReceived(data.payload));
+        this.oneSignal.handleNotificationOpened().subscribe(data => this.onPushOpened(data.notification.payload));
+        this.oneSignal.endInit();
+    }
+
+    private onPushReceived(payload: OSNotificationPayload) {
+        alert('Push recevied:' + payload.body);
+    }
+
+    private onPushOpened(payload: OSNotificationPayload) {
+        alert('Push opened: ' + payload.body);
+    }
+    handlerNotifications(){
+      this.oneSignal.startInit('b2f7f966-d8cc-11e4-bed1-df8f05be55ba', '703322744261');
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+      this.oneSignal.handleNotificationOpened()
+      .subscribe(jsonData => {
+        let alert = this.alertCtrl.create({
+          title: jsonData.notification.payload.title,
+          subTitle: jsonData.notification.payload.body,
+          buttons: ['OK']
+        });
+        alert.present();
+        console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+      });
+      this.oneSignal.endInit();
+    }
 }

@@ -1,0 +1,126 @@
+page-save-benefits {
+	// Main Header
+	.searchbar-md .searchbar-search-icon {
+		left: 25px;
+		top: 9px;
+		width: 21px;
+		height: 21px;
+	}
+	.searchbar-ios .searchbar-input{
+		background: #fff !important;
+		border-radius: 28px;
+	}
+	.searchbar-ios{
+		width: 114%;
+	}
+	.box-shadow{
+		content: "";
+	}
+	.searchbar-md .searchbar-input {
+		margin-top: -5px;
+		margin-left: 20px;
+		padding: 0px 22px;
+		border-radius: 28px;
+		border: 2px solid #2CB5E8;
+		background-position: left 8px center;
+		height: 37px;
+		font-size: 1.6rem;
+		font-weight: 400;
+		line-height: 0rem;
+		color: #141414;
+		background-color: #fff;
+		-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+	}
+	ion-toolbar.scrollable-segments {
+		ion-segment {
+			display: block;
+			overflow-x: auto;
+			white-space: nowrap;
+
+			ion-segment-button.segment-button {
+				display: inline-block;
+				width: auto;
+			}
+		}
+	}
+	.header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before{
+		display:none;
+	}
+	.Bg-header{
+		background-color: #00298f;
+	}
+	.header-row{
+		height: 60px;
+	}
+	.first-col{
+		background-color: #00298f;
+		height:60px;
+	}
+	.icon-category{
+		width: 35px;
+		height: 40px;
+	}
+	.arrow{
+		z-index:999;
+		background-color: #00A0E3;
+		clip-path: polygon(41% 0, 100% 0%, 100% 100%, 41% 100%, 20% 51%);
+		height:64px;
+	}
+	.Header-title{
+		padding: 0px 0 0 42px; 
+		margin-top:20px;
+		font-size: 15px;
+		font-weight: bold;
+		color:#fff;
+	}
+	// Main Header End
+	.list-md .item-block .item-inner {
+		border-bottom: 0px;
+	}
+	ion-avatar img, ion-thumbnail img {
+		display: block;
+		box-shadow: 2px 3px 3px black;
+		margin-top: -18px !important;
+	}
+	.item-md ion-thumbnail {
+		min-width: 80px;
+		min-height: 80px;
+		margin-top: 30px !important;
+	}
+	ion-card {
+		height: 100px;
+	}
+	.card-md {
+		margin:0px;
+		margin-bottom: 10px;
+		border-radius: 2px;
+		width: 100%;
+		font-size: 1.4rem;
+	}
+	.card-content-md {
+		padding: 10px 0px;
+		font-size: 1.4rem;
+		line-height: 1.5;
+		margin-top: -10px;
+	}
+	.item-offert{
+		border-bottom: 1px outset;
+		border-top: 0px !important;
+	}
+	.item-md ion-thumbnail ion-img, .item-md ion-thumbnail img {
+		width: 62px !important;
+		height: 70px;
+		max-width: 62px;
+		max-height: 70px;
+	}
+	.Border-card{
+		border-bottom: 0;
+		border-left: 3px solid #00298f;
+	}
+	.button-offert{
+		color:white; 
+		float: right;
+		margin-top: -40px !important;
+	}
+}
