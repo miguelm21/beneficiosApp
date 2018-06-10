@@ -15,25 +15,25 @@
 
   <ion-content>
     <ion-grid>
-       <ion-row>
+       <ion-row *ngIf="!token">
         <ion-col>
-          <button menuClose ion-button block color="light" (tap)="logout()">
+          <button menuClose ion-button block color="light" (tap)="openPage(pages[0])">
             <div>
               <ion-icon name="log-in" color="bluep"></ion-icon>
-              <label >Salir</label>
+              <label >Login</label>
             </div>
           </button>
         </ion-col>
         <ion-col>
-          <button menuClose ion-button block color="light" (tap)="openPage(pages[5])">
+          <button menuClose ion-button block color="light" (tap)="openPage(pages[1])">
             <div>
             <ion-icon name="person-add" color="bluep"></ion-icon>
-            <label >Beneficios Guardados</label>
+            <label >Registrarse</label>
           </div>
           </button>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="token">
         <ion-col>
           <button menuClose ion-button block color="light" (tap)="openPage(pages[2])">
             <div>
@@ -114,7 +114,7 @@
         </ion-col>
         <ion-col width-67>
 
-          <button ion-button block color="light" >
+          <button ion-button block color="light" (tap)="logout()">
             <div>
             <ion-icon name="exit" color="bluep"></ion-icon>
             <label >Salir</label>

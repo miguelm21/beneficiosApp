@@ -5,17 +5,17 @@
   Ionic pages and navigation.
 -->
 <ion-header class="Bg-header">
+	<ion-navbar>
 	<ion-row class="header-row">
 		<ion-col col-8 col-md-9 class="first-col">
 			<ion-row>
-				<ion-col col-1 col-md-3>
-					<button ion-button clear color="light" (click)="back()">
+				<!-- <ion-col col-1 col-md-3 (click)="back()">
+					<button ion-button clear color="light">
 						<ion-icon name="arrow-back"></ion-icon>
 					</button>
-				</ion-col>
+				</ion-col> -->
 				<ion-col col-11 col-md-9>
-					<ion-searchbar class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
-					</ion-searchbar>
+					<ion-searchbar (ionInput)="getItems($event)" autocomplete="off" autocorrect="off"></ion-searchbar>
 				</ion-col>
 			</ion-row>
 		</ion-col>
@@ -23,15 +23,21 @@
 			<img class="club-logo" src="assets/imgs/logo-club.png">
 		</ion-col>
 	</ion-row>
+	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
+	<ion-list *ngIf="showList" style="min-height: 50px">
+    <ion-item *ngFor="let item of items">
+      <button ion-button (tap)="benefit(item.id)">{{ item.name }}</button>
+    </ion-item>
+  </ion-list>
 	<div class="card-style" padding style="border-radius:10px;">
 		<ion-row class="row-modal">
 			<ion-col col-12>
 				<ion-thumbnail class="tumb-img" item-start>
 					<h3 class="title-offer" text-center>{{ benefit?.name }}</h3>
-					<img class="img-beneficio" src="data:image/png;base64,{{ benefit?.image }}" #myImage (click)="presentImage(myImage)"><p class="text-offert" text-justify>{{ benefit?.description }}</p>
+					<img class="img-beneficio" [src]="benefit?.image" #myImage (click)="presentImage(myImage)"><p class="text-offert" text-justify>{{ benefit?.description }}</p>
 				</ion-thumbnail>
 			</ion-col>
 		</ion-row>

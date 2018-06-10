@@ -5,17 +5,17 @@
   Ionic pages and navigation.
 -->
 <ion-header class="Bg-header">
+	<ion-navbar>
 	<ion-row class="header-row">
 		<ion-col col-8 col-md-9 class="first-col">
 			<ion-row>
-				<ion-col col-1 col-md-3>
-					<button ion-button clear color="light" (tap)="home()">
+				<!-- <ion-col col-1 col-md-3 (tap)="home()">
+					<button ion-button clear color="light">
 						<ion-icon name="arrow-back"></ion-icon>
 					</button>
-				</ion-col>
+				</ion-col> -->
 				<ion-col col-11 col-md-9>
-					<ion-searchbar class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
-					</ion-searchbar>
+					<ion-searchbar (ionInput)="getItems($event)" autocomplete="off" autocorrect="off"></ion-searchbar>
 				</ion-col>
 			</ion-row>
 		</ion-col>
@@ -23,6 +23,7 @@
 			<img class="club-logo" src="assets/imgs/logo-club.png">
 		</ion-col>
 	</ion-row>
+	</ion-navbar>
 </ion-header>
 
 

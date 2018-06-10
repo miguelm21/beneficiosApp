@@ -31,6 +31,9 @@ export class CategoryPage {
 
   api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
 
+  items;
+  showList;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -49,7 +52,42 @@ export class CategoryPage {
     this.id = this.navParams.get('id');
     this.token = this.navParams.get('token');
     this.getCategory(id, token);
+    this.initializeItems();
   }
+
+  initializeItems() {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
+
+        this.http.get('https://clubbeneficiosuno.goodcomex.com/beneficios/public/getBenefits2.json', { headers: headers })
+        .map(res => res.json())
+          .subscribe(
+            data => {
+                this.items = data;
+            },
+            err => {
+                this.toast('no se encontraron beneficios')
+            }
+          );
+      }
+
+    getItems(ev: any) {
+
+        // set val to the value of the searchbar
+        let val = ev.target.value;
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+          this.showList = true;
+          this.items = this.items.filter((item) => {
+            return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          })
+        }
+        else if(!val || val == undefined) {
+            this.showList = false;
+        }
+    }
 
   getCategory(id, token) {
     let loading = this.loadingCtrl.create({

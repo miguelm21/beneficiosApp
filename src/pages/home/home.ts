@@ -48,6 +48,7 @@ declare var map;
      show;
 
      items;
+     items2;
      showList = false;
 
      categories: Object[];
@@ -114,6 +115,8 @@ declare var map;
         this.getMapData();
         /*this.handlerNotifications();*/
         this.SendData();
+        // Reset items back to all of the 
+        this.initializeItems();
         /*this.SendMessage();*/
 
         setInterval(() => { this.getLocation(); this.getMapData(); }, 15000);
@@ -124,24 +127,36 @@ declare var map;
      }
 
      initializeItems() {
-        this.items = [
-          'Amsterdam',
-          'Bogota',
-        ]
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
+
+        this.http.get('https://clubbeneficiosuno.goodcomex.com/beneficios/public/getBenefits2.json', { headers: headers })
+        .map(res => res.json())
+          .subscribe(
+            data => {
+                console.log(data);
+                this.items = data;
+                console.log(this.items);
+            },
+            err => {
+                this.toast('no se encontraron beneficios')
+            }
+          );
+
+          this.items2 = ['Amsterdam', 'Bogota', 'Caracas'];
       }
 
     getItems(ev: any) {
-        // Reset items back to all of the 
-        this.initializeItems();
 
         // set val to the value of the searchbar
         let val = ev.target.value;
-        console.log(val);
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
           this.showList = true;
           this.items = this.items.filter((item) => {
-            return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
           })
         }
         else if(!val || val == undefined) {

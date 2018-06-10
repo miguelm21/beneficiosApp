@@ -19,7 +19,7 @@ import { SaveBenefitsPage } from '../pages/save-benefits/save-benefits';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage:any = LoginPage;
+  rootPage:any = HomePage;
   token
 
   pages: Array<{ title: string, component: any }>;
@@ -64,43 +64,49 @@ export class MyApp {
   logout() {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>'
     });
     loading.present();
 
-    let headers = new Headers();
+    this.storage.remove('token');
+    this.storage.remove('profile');
+    this.token = null;
+    this.nav.setRoot(HomePage);
+    loading.dismiss();
+
+    /*let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('X-Requested-With', 'XMLHttpRequest');
     headers.append('Authorization', this.token);
 
-    this.http.post(this.api + 'logout', { }, { headers: headers })
+    this.http.post(this.api + 'logout', {}, { headers: headers })
       .map(res => res.json())
       .subscribe(
-        data => { this.nav.setRoot(LoginPage); this.storage.remove('token'); this.storage.remove('profile'); loading.dismiss(); },
+        data => { this.nav.setRoot(HomePage); this.storage.remove('token'); this.storage.remove('profile'); loading.dismiss(); },
         err => { 
           if (err.status == 401){
             this.storage.remove('token');
             this.storage.remove('profile');
-            this.nav.push(LoginPage);
+            this.nav.setRoot(HomePage);
           } else if (err.status == 400) {
             this.toast('Su usuario ha sido deshabilitado');
             this.storage.remove('token');
             this.storage.remove('profile');
-            this.nav.push(LoginPage);
+            this.nav.setRoot(HomePage);
           } else if (err.status == 500) {
             this.toast('Ocurrio un error');
             this.storage.remove('token');
             this.storage.remove('profile');
-            this.nav.push(LoginPage);
+            this.nav.setRoot(HomePage);
           } else {
             this.toast('Ocurrio un error');
             this.storage.remove('token');
             this.storage.remove('profile');
-            this.nav.push(LoginPage);
+            this.nav.setRoot(HomePage);
           }
           loading.dismiss();
         },
-      );
+      );*/
   }
 
   hideSplashScreen() {

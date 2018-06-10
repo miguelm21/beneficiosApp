@@ -6,17 +6,17 @@
 -->
 <ion-header class="Bg-header">
 	<explandable-header [scrollArea]="mycontent" headerHeight="60">
+		<ion-navbar>
 		<ion-row class="header-row">
 			<ion-col col-8 class="first-col">
 				<ion-row>
-					<ion-col col-2>
+					<!-- <ion-col col-2>
 						<button ion-button clear color="light" (tap)="home()">
 							<ion-icon name="arrow-back"></ion-icon>
 						</button>
-					</ion-col>
+					</ion-col> -->
 					<ion-col col-10>
-						<ion-searchbar class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
-						</ion-searchbar>
+						<ion-searchbar (ionInput)="getItems($event)" autocomplete="off" autocorrect="off"></ion-searchbar>
 					</ion-col>
 				</ion-row>
 			</ion-col>
@@ -24,6 +24,7 @@
 				<p class="Header-title">ClubUno</p>
 			</ion-col>
 		</ion-row>
+	</ion-navbar>
 	</explandable-header>
 	<ion-toolbar color="light" mode="md" class="scrollable-segments">
 		<ion-segment color="bluep" mode="md" [(ngModel)]="section">
@@ -36,6 +37,11 @@
 </ion-header>
 
 <ion-content fullscreen #mycontent>
+	<ion-list *ngIf="showList" style="min-height: 50px">
+    <ion-item *ngFor="let item of items">
+      <button ion-button (tap)="benefit(item.id)">{{ item.name }}</button>
+    </ion-item>
+  </ion-list>
 	<div *ngFor="let c of categories">
 		<ion-list *ngIf="section == c.id">
 			<div style="margin-top: 0%;">
