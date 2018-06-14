@@ -2,7 +2,7 @@ page-beneficio {
 	// Main Header
 	.searchbar-md .searchbar-search-icon {
 		left: 25px;
-		top: 9px;
+		top: 4px;
 		width: 21px;
 		height: 21px;
 	}
@@ -12,6 +12,25 @@ page-beneficio {
 	}
 	.searchbar-ios{
 		width: 100%;
+	}
+	.toolbar-md {
+		padding: 0px;
+		min-height: 56px;
+	}
+	.toolbar-ios{
+		padding: 0px;
+		min-height: 56px;
+	}
+	.button-inner{
+		color:white;
+	}
+	.toolbar-background-md {
+		border-color: #b2b2b2;
+		background: #133F6D;
+	}
+	.toolbar-background-ios {
+		border-color: #b2b2b2;
+		background: #133F6D;
 	}
 	.box-shadow{
 		content: "";
@@ -57,7 +76,7 @@ page-beneficio {
 	}
 	.club-logo{
 		width: 54%;
-		margin-left: 49px;
+		margin-left: 42px;
 		margin-top: 11px;
 	}
 	// Main Header End
