@@ -12,7 +12,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <preference name="ScrollEnabled" value="false" />
-    <preference name="android-minSdkVersion" value="16" />
+    <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="SplashScreenDelay" value="10000" />
@@ -109,4 +109,5 @@
     </plugin>
     <engine name="browser" spec="~5.0.3" />
     <engine name="android" spec="~7.0.0" />
+    <allow-navigation href="http://192.168.0.108:8100" />
 </widget>
