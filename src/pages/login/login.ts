@@ -44,12 +44,9 @@ export class LoginPage {
     public menuCtrl: MenuController) {
   }
 
-  ionViewCanEnter() {
-    this.authenticate();
-  }
-
   ionViewDidLoad() {
     this.menuCtrl.close();
+    this.authenticate();
   }
 
   keytab(event) {
@@ -74,21 +71,24 @@ export class LoginPage {
     loading.present();
     this.fb.login(['public_profile', 'user_friends', 'email'])
     .then((res: FacebookLoginResponse) => {
-      alert(res.authResponse.userID);
+      /*alert(res.authResponse.userID);*/
       loading.dismiss();
-      /*let headers = new Headers();
+      let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        this.fb.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', []).then(profile => {
-          this.userData = {email: profile['email'], first_name: profile['first_name'], picture: profile['picture_large']['data']['url'], username: profile['name']}
-        });
+        this.fb.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', []).then(
+          profile => {
+            this.userData = {email: profile['email'], first_name: profile['first_name'], picture: profile['picture_large']['data']['url'], username: profile['name']};
+          }
+        )
+        .catch(e => { /*alert(e)*/ });
 
         var credentials = JSON.stringify({ id: res.authResponse.userID, email: this.userData.email, name: this.userData.first_name });
         this.http.post(this.api + 'auth/facebook/callback', credentials, { headers: headers })
         .map(res => res.json())
         .subscribe(
           data => {
-            this.authenticate();
+            this.authSuccess(data.token);
             loading.dismiss();
             this.navCtrl.setRoot(HomePage, { token: this.token });
           },
@@ -98,15 +98,15 @@ export class LoginPage {
               this.toast('Inicie Sesion Nuevamente');
             } else if (err.status == 500) {
               loading.dismiss();
-              this.toast('Error');
+              this.toast('Error 1');
             } else {
               loading.dismiss();
-              this.toast('Error');
+              this.toast('Error 2');
             }   
           },
-        );*/
+        );
     })
-    .catch(e => { alert(e); loading.dismiss(); });
+    .catch(e => { /*alert(e);*/ loading.dismiss(); });
 
     /*this.fb.login(['public_profile', 'user_friends', 'email'])
     .then((response: FacebookLoginResponse) => { 
@@ -136,7 +136,7 @@ export class LoginPage {
         .map(res => res.json())
         .subscribe(
           data => {
-            this.authenticate();
+            this.authSuccess(data.token);
             loading.dismiss();
             this.navCtrl.setRoot(HomePage, { token: this.token });
           },
@@ -146,15 +146,15 @@ export class LoginPage {
               this.toast('Inicie Sesion Nuevamente');
             } else if (err.status == 500) {
               loading.dismiss();
-              this.toast('Error');
+              this.toast('Error 1');
             } else {
               loading.dismiss();
-              this.toast('Error');
+              this.toast('Error 2');
             }   
           },
         );
       })
-      .catch(err => { this.toast(err); loading.dismiss(); });
+      .catch(err => { /*alert(err); this.toast(err);*/ loading.dismiss(); });
   }
 
   me () {

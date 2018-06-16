@@ -2,10 +2,30 @@ page-noticia {
 	// Main Header
 	.searchbar-md .searchbar-search-icon {
 		left: 25px;
-		top: 9px;
+		top: 4px;
 		width: 21px;
 		height: 21px;
 	}
+	.toolbar-md {
+		padding: 0px;
+		min-height: 56px;
+	}
+	.toolbar-ios{
+		padding: 0px;
+		min-height: 56px;
+	}
+	.button-inner{
+		color:white;
+	}
+	.toolbar-background-md {
+		border-color: #b2b2b2;
+		background: #133F6D;
+	}
+	.toolbar-background-ios {
+		border-color: #b2b2b2;
+		background: #133F6D;
+	}
+
 	.searchbar-ios .searchbar-input{
 		background: #fff !important;
 		border-radius: 28px;
@@ -315,201 +335,201 @@ page-noticia {
 			margin-top: 6px;
 		}
 		// .searchbar-ios{
-		// 	font-size: 1.8rem;
-		// 	margin-top:0px;
-		// }
-		.searchbar-md .searchbar-input {
-			font-size: 1.8rem;
-			font-weight: 400;
+			// 	font-size: 1.8rem;
+			// 	margin-top:0px;
+			// }
+			.searchbar-md .searchbar-input {
+				font-size: 1.8rem;
+				font-weight: 400;
+			}
+			.Header-title{
+				padding: 0px 0 0 35px;
+				margin-top: 15px;
+				font-size: 21px;
+			}
+			.title-segment{
+				font-size: 2.2rem;
+			}
+			.club-logo {
+				width: 55%;
+				margin-left: 77px;
+				margin-top: 2px;
+			}
+			.arrow{
+				-webkit-clip-path: polygon(36% 0, 100% 0%, 100% 100%, 38% 100%, 20% 51%);
+				clip-path: polygon(36% 0, 100% 0%, 100% 100%, 38% 100%, 20% 51%);
+				height: 74px;
+			}
+			// Main-header End
+			.title-card-novedades{
+				font-size:24px;
+			}
+			.text-noticia{
+				font-size:18px;
+			}
+			.text-autor-novedades{
+				font-size:20px;
+			}
+			.container-novedades .img-noticias {
+				min-width: 620px;
+				max-width: 100%;
+			}
+			.title-background {
+				margin:auto;
+				width:100%;
+			}
+			.social-button{
+				width: 40px;
+				height: 40px;
+			}
+			.social-logo {
+				padding: 10px;
+				font-size: 24px;
+			}
 		}
-		.Header-title{
-			padding: 0px 0 0 35px;
-			margin-top: 15px;
-			font-size: 21px;
+		@media (min-width: 501px) and (max-width: 767px) {
+			.club-logo {
+				margin-left: 70px;
+				margin-top: 4px;
+			}
+			.container-novedades .img-noticias {
+				min-width: 396px;
+				max-width: 100%;
+			}
+			.title-background {
+				margin:auto;
+			}
 		}
-		.title-segment{
-			font-size: 2.2rem;
+		@media (min-width: 401px) and (max-width: 500px) {
+			// Main-header
+			.Header-title {
+				padding: 0px 0 0 56px;
+				margin-top: 19px;
+				font-size: 17px;
+			}
+			.club-logo {
+				width: 54%;
+				margin-left: 57px;
+				margin-top: 11px;
+			}
+			.searchbar-ios{
+				margin-top:6px;
+			}
+			.ion-ios-menu:before {
+				content: "\f1c3";
+				font-size: 30px;
+				margin-top: -9px;
+				margin-left: -8px;
+			}
+			// Main-header End
+			.container-novedades .img-noticias {
+				min-width: 320px;
+				max-width: 100%;
+				min-height: 100px;
+			}
+			.title-background {
+				margin:auto;
+				width: 100%;
+				min-width:320px;
+			}
 		}
-		.club-logo {
-			width: 55%;
-			margin-left: 77px;
-			margin-top: 2px;
+		@media (min-width: 375px) and (max-height: 667px){
+			.title-background{
+				position: relative;
+				/* bottom: 15px; */
+				top: 10px;
+				background-color: rgba(0, 41, 143, 0.7);
+				left: 0px;
+				width: 100%;
+				max-width: 100%;
+				height: 25px;
+				color: white;
+				font-weight: 800;
+				padding: 5px;
+				text-decoration: none;
+			}
 		}
-		.arrow{
-			-webkit-clip-path: polygon(36% 0, 100% 0%, 100% 100%, 38% 100%, 20% 51%);
-			clip-path: polygon(36% 0, 100% 0%, 100% 100%, 38% 100%, 20% 51%);
-			height: 74px;
+		@media screen and (min-width: 320px) and (max-height: 640px) {
+			// Main-header
+			.Header-title {
+				padding: 0px 0 0 84px;
+				margin-top: 13px;
+				font-size: 23px;
+			}
+			.club-logo{
+				width: 39%;
+				margin-left: 103px;
+				margin-top: 5px;
+			}
+			.searchbar-ios{
+				margin-top:6px;
+			}
+			.ion-ios-menu:before {
+				content: "\f1c3";
+				font-size: 30px;
+				margin-top: -9px;
+				margin-left: -8px;
+			}
+			// Main-header End
+			.container-novedades .img-noticias {
+				min-width: 470px;
+				max-width: 100%;
+			}
+			.title-background {
+				margin:auto;
+				width: 100%;
+			}
 		}
-		// Main-header End
-		.title-card-novedades{
-			font-size:24px;
+		@media (max-width: 320px) and (min-height: 568px) {
+			.club-logo {
+				width: 60% !important;
+				margin-left: 40px !important;
+				margin-top: 5px;
+			}
+			.container-novedades .img-noticias {
+				min-width: 240px !important;
+				max-width: 100%;
+				min-height: 100px !important;
+			}
+			.title-background {
+				margin:auto;
+				width: 100%;
+			}
 		}
-		.text-noticia{
-			font-size:18px;
-		}
-		.text-autor-novedades{
-			font-size:20px;
-		}
-		.container-novedades .img-noticias {
-			min-width: 620px;
-			max-width: 100%;
-		}
-		.title-background {
-			margin:auto;
-			width:100%;
-		}
-		.social-button{
-			width: 40px;
-			height: 40px;
-		}
-		.social-logo {
-			padding: 10px;
-			font-size: 24px;
+		@media (max-width: 400px) and (orientation: portrait) {
+			// Main-header
+			.Header-title{
+				padding: 0px 0 0 39px; 
+				margin-top:20px;
+				font-size: 15px;
+			}
+			.searchbar-ios{
+				margin-top:6px;
+			}
+			.ion-ios-menu:before {
+				content: "\f1c3";
+				font-size: 30px;
+				margin-top: -9px;
+				margin-left: -8px;
+			}
+			.club-logo{
+				width: 54%;
+				margin-left: 42px;
+				margin-top: 11px;
+			}
+			// Main-header End
+			.container-novedades .img-noticias {
+				min-width: 270px;
+				max-width: 100%;
+				min-height: 100px;
+			}
+			.title-background {
+				margin:auto;
+				width: 100%;
+				min-width:270px;
+			}
+			.social-row-style{
+				margin-left: 0px;
+			}
 		}
 	}
-	@media (min-width: 501px) and (max-width: 767px) {
-		.club-logo {
-			margin-left: 70px;
-			margin-top: 4px;
-		}
-		.container-novedades .img-noticias {
-			min-width: 396px;
-			max-width: 100%;
-		}
-		.title-background {
-			margin:auto;
-		}
-	}
-	@media (min-width: 401px) and (max-width: 500px) {
-		// Main-header
-		.Header-title {
-			padding: 0px 0 0 56px;
-			margin-top: 19px;
-			font-size: 17px;
-		}
-		.club-logo {
-			width: 54%;
-			margin-left: 57px;
-			margin-top: 11px;
-		}
-		.searchbar-ios{
-			margin-top:6px;
-		}
-		.ion-ios-menu:before {
-			content: "\f1c3";
-			font-size: 30px;
-			margin-top: -9px;
-			margin-left: -8px;
-		}
-		// Main-header End
-		.container-novedades .img-noticias {
-			min-width: 320px;
-			max-width: 100%;
-			min-height: 100px;
-		}
-		.title-background {
-			margin:auto;
-			width: 100%;
-			min-width:320px;
-		}
-	}
-	@media (min-width: 375px) and (max-height: 667px){
-		.title-background{
-			position: relative;
-			/* bottom: 15px; */
-			top: 10px;
-			background-color: rgba(0, 41, 143, 0.7);
-			left: 0px;
-			width: 100%;
-			max-width: 100%;
-			height: 25px;
-			color: white;
-			font-weight: 800;
-			padding: 5px;
-			text-decoration: none;
-		}
-	}
-	@media screen and (min-width: 320px) and (max-height: 640px) {
-		// Main-header
-		.Header-title {
-			padding: 0px 0 0 84px;
-			margin-top: 13px;
-			font-size: 23px;
-		}
-		.club-logo{
-			width: 39%;
-			margin-left: 103px;
-			margin-top: 5px;
-		}
-		.searchbar-ios{
-			margin-top:6px;
-		}
-		.ion-ios-menu:before {
-			content: "\f1c3";
-			font-size: 30px;
-			margin-top: -9px;
-			margin-left: -8px;
-		}
-		// Main-header End
-		.container-novedades .img-noticias {
-			min-width: 470px;
-			max-width: 100%;
-		}
-		.title-background {
-			margin:auto;
-			width: 100%;
-		}
-	}
-	@media (max-width: 320px) and (min-height: 568px) {
-		.club-logo {
-			width: 60% !important;
-			margin-left: 40px !important;
-			margin-top: 5px;
-		}
-		.container-novedades .img-noticias {
-			min-width: 240px !important;
-			max-width: 100%;
-			min-height: 100px !important;
-		}
-		.title-background {
-			margin:auto;
-			width: 100%;
-		}
-	}
-	@media (max-width: 400px) and (orientation: portrait) {
-		// Main-header
-		.Header-title{
-			padding: 0px 0 0 39px; 
-			margin-top:20px;
-			font-size: 15px;
-		}
-		.searchbar-ios{
-			margin-top:6px;
-		}
-		.ion-ios-menu:before {
-			content: "\f1c3";
-			font-size: 30px;
-			margin-top: -9px;
-			margin-left: -8px;
-		}
-		.club-logo{
-			width: 54%;
-			margin-left: 49px;
-			margin-top: 11px;
-		}
-		// Main-header End
-		.container-novedades .img-noticias {
-			min-width: 270px;
-			max-width: 100%;
-			min-height: 100px;
-		}
-		.title-background {
-			margin:auto;
-			width: 100%;
-			min-width:270px;
-		}
-		.social-row-style{
-			margin-left: 0px;
-		}
-	}
-}

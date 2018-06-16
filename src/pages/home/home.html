@@ -5,8 +5,8 @@ See http://ionicframework.com/docs/components/#navigation for more info on
 Ionic pages and navigation.
 -->
 <ion-header class="Bg-header">
-  <expandable-header class="expandable" [scrollArea]="mycontent" headerHeight="60">
-   <ion-row class="header-row">
+<!--   <expandable-header class="expandable" [scrollArea]="mycontent" headerHeight="60">
+ -->   <ion-row class="header-row">
     <ion-col col-8 col-md-10 class="first-col">
       <ion-row>
         <ion-col col-2 col-md-2>
@@ -25,16 +25,16 @@ Ionic pages and navigation.
       <img class="club-logo" src="assets/imgs/logo-club.png">
     </ion-col>
   </ion-row>
-</expandable-header>
-<ion-toolbar color="light" mode="md" class="scrollable-segments" *ngIf="!showList">
+<!-- </expandable-header>
+ --><ion-toolbar color="light" mode="md" class="scrollable-segments">
   <ion-segment color="bluep" mode="md" [(ngModel)]="section">
-    <ion-segment-button  value="1"  style="width: 34%">
+    <ion-segment-button  value="1"  style="width: 35%">
       <h6 class="title-segment" style="text-transform:none;">Cercanos a Mí</h6>
     </ion-segment-button>
-    <ion-segment-button  value="2"  style="width: 34%">
+    <ion-segment-button  value="2"  style="width: 35%">
       <h6 class="title-segment" style="text-transform:none;">Beneficios</h6>
     </ion-segment-button>
-    <ion-segment-button  value="3"  style="width: 34%">
+    <ion-segment-button  value="3"  style="width: 35%">
       <h6 class="title-segment" style="text-transform:none;">Novedades</h6>
     </ion-segment-button>
   </ion-segment>
@@ -44,7 +44,7 @@ Ionic pages and navigation.
 <ion-content fullscreen #mycontent>
   <ion-list *ngIf="showList" style="min-height: 50px">
     <ion-item *ngFor="let item of items">
-      {{ item }}
+      <button ion-button (tap)="benefit(item.id)">{{ item.name }}</button>
     </ion-item>
   </ion-list>
   <div [ngSwitch]="section">
@@ -52,47 +52,44 @@ Ionic pages and navigation.
     <ion-list [style.display]="section == '1' ? 'block' : 'none'"  class="Theme-bg">
 
       <ion-list class="accordion-list">
-
-        <ion-list-header class="list-header-acc" *ngFor="let item of information; let i = index" no-lines no-padding>
-          
+        <ion-list-header *ngFor="let item of information; let i = index" no-lines no-padding>
+          <!-- Toggle Button -->
           <button ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
-            <ion-icon item-right name="arrow-down" *ngIf="!item.open"></ion-icon>
-            <ion-icon item-right name="arrow-up" *ngIf="item.open"></ion-icon>
-            <img src="assets/imgs/filter.png" style="width:40px;" item-start>
-            {{ item.name }}
-          </button>
+           <ion-icon item-right name="arrow-down" *ngIf="!item.open"></ion-icon>
+           <ion-icon item-right name="arrow-up" *ngIf="item.open"></ion-icon>
+           <img src="assets/imgs/filter.png" style="width:40px;" item-start>
+           {{ item.name }}
+         </button>
 
-          <ion-list *ngIf="item.children && item.open" no-lines>
-
-            <ion-list-header *ngFor="let child of item.children; let j = index" no-padding>
-             
-             <ion-item *ngIf="!child.children" ion-item detail-none class="child-item">
-              <h4 text-center class="title-filtro">{{ child.name }}</h4>
-            </ion-item>
-            <ion-item-divider class="child-item">
-              <ion-input type="number" [(ngModel)]="Km" class="input-filtro"></ion-input>
-              <button ion-button class="button-aplicar" outline item-end style="margin-left: 30px;" (tap)="filterKmMap(latitude, longitude)">{{ child.ver }}</button>
-            </ion-item-divider>
+         <ion-list *ngIf="item.children && item.open" no-lines>
+          <!-- Button Acordion -->
+          <ion-list-header *ngFor="let child of item.children; let j = index" no-padding>
+            <!-- Contenido Acordion -->
+            <ion-item *ngIf="!child.children" ion-item detail-none class="child-item" text-wrap>
+              <ion-row>
+                <ion-col col-8>
+                  <ion-item>
+                    <ion-input type="number" [(ngModel)]="Km" class="input-filtro"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-3 no-padding style="align-self: center">
+                  <button ion-button class="button-aplicar" outline  (tap)="filterKmMap(latitude, longitude)">{{ child.ver }}</button>
+                </ion-col>
+              </ion-row>
+              <h2 text-center>{{ child.name }}</h2>
+              <ion-row class="row-checkboxs">
+                <ion-col col-6 *ngFor="let c of categories" text-center>
+                  <ion-item text-center>
+                    <ion-checkbox class="checkbox-edit" id="box-{{ c.id }}" (ionChange)="filterCategoryMap(c.id, $event)"></ion-checkbox>
+                  </ion-item>
+                  <label for="box-{{ c.id }}" class="label-checkboxs">{{ c.name }}</label>
+                </ion-col>
+              </ion-row>
+            </ion-item> 
           </ion-list-header>
-
-          <ion-item-divider class="child-item divider-checkboxs">
-
-           <ion-row class="row-checkboxs">
-            <ion-col col-6 *ngFor="let c of categories">
-              <ion-item>
-                <ion-checkbox class="checkbox-edit" id="box-{{ c.id }}" (ionChange)="filterCategoryMap(c.id, $event)"></ion-checkbox>
-
-              </ion-item>
-              <label for="box-{{ c.id }}" class="label-checkboxs">{{ c.name }}</label>
-            </ion-col>
-          </ion-row>
-
-        </ion-item-divider>
-
-      </ion-list>
-    </ion-list-header>
-
-  </ion-list>
+        </ion-list>
+      </ion-list-header>
+    </ion-list>
 
   <div class="contenedor-map">
     <div text-center #map id="map">
@@ -103,16 +100,16 @@ Ionic pages and navigation.
   <div class="contenedor-cards" *ngIf="show == 1">
     <div class="card-style" *ngFor="let b of benefits">
       <ion-row class="row-card">
-        <ion-col col-1 style="background-color:#001E42" col-md-2>
+        <ion-col col-1 style="background-color:#001E42" col-md-1>
           <button ion-fab icon-only color="light" *ngIf="b.bookmark == 1" (tap)="UnpostBenefit(b.id)"><ion-icon name="bookmark" style="font-size: 30px; color=#000"></ion-icon></button>
           <button ion-fab icon-only *ngIf="b.bookmark == 0" (tap)="PostBenefit(b.id)"><ion-icon name="bookmark" style="font-size: 30px; color:#fff;"></ion-icon></button>
         </ion-col>
-        <ion-col col-3>
+        <ion-col col-3 col-md-2>
           <ion-thumbnail class="tumb-img" item-start>
             <img class="img-card" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
           </ion-thumbnail>
         </ion-col>
-        <ion-col col-5 col-md-8>
+        <ion-col col-5 col-md-7>
           <h2 class="title-offert">{{ b.name }}</h2>
           <p class="text-offert">{{ b.description }}</p>
         </ion-col>
