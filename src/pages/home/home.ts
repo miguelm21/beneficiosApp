@@ -48,6 +48,7 @@ declare var map;
      show;
 
      items;
+     items2;
      showList = false;
 
      categories: Object[];
@@ -78,6 +79,18 @@ declare var map;
                 this.platform.resume.subscribe(() => {
                     console.log('[INFO] App resumed');
                 });
+                var notificationOpenedCallback = function(jsonData) {
+                  console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+                };
+                console.log("Aqui")
+                window["plugins"].OneSignal
+                  .startInit("4348c8d3-0923-4a76-841d-98de77f2c29e", "4493616060")
+                  .handleNotificationOpened(notificationOpenedCallback)
+                  .endInit();
+                window.plugins.OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
+                  alert("User accepted notifications: " + accepted);
+                });  
+              });
             });
 
             let localData = http.get('assets/information.json').map(res => res.json().items);
@@ -87,7 +100,7 @@ declare var map;
             this._imageViewerCtrl = imageViewerCtrl; 
             this.parameter1 = navParams.get('param1'); 
             this.parameter1 = this.navParams.get('param1');
-
+           
             if(this.parameter1)
             {
                 this.section = this.parameter1;
@@ -114,6 +127,8 @@ declare var map;
         this.getMapData();
         /*this.handlerNotifications();*/
         this.SendData();
+        // Reset items back to all of the 
+        this.initializeItems();
         /*this.SendMessage();*/
 
         setInterval(() => { this.getLocation(); this.getMapData(); }, 15000);
@@ -121,27 +136,43 @@ declare var map;
      
     ionViewDidLoad() {
         this.menuCtrl.close();
+        console.log("cargo")
+        window.plugins.OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
+          console.log("User accepted notifications: " + accepted);
+        });
      }
 
      initializeItems() {
-        this.items = [
-          'Amsterdam',
-          'Bogota',
-        ]
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
+
+        this.http.get('https://clubbeneficiosuno.goodcomex.com/beneficios/public/getBenefits2.json', { headers: headers })
+        .map(res => res.json())
+          .subscribe(
+            data => {
+                console.log(data);
+                this.items = data;
+                console.log(this.items);
+            },
+            err => {
+                this.toast('no se encontraron beneficios')
+            }
+          );
+
+          this.items2 = ['Amsterdam', 'Bogota', 'Caracas'];
       }
 
     getItems(ev: any) {
-        // Reset items back to all of the 
-        this.initializeItems();
 
         // set val to the value of the searchbar
         let val = ev.target.value;
-        console.log(val);
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
           this.showList = true;
           this.items = this.items.filter((item) => {
-            return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
           })
         }
         else if(!val || val == undefined) {
