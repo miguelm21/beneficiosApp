@@ -177,7 +177,7 @@ export class CategoryPage {
   }
 
   home(){
-  	this.navCtrl.popToRoot();
+  	this.navCtrl.pop();
   }
 
   benefit(id){

@@ -248,8 +248,9 @@ deleteMarkers(markers) {
 }
 
 back(){
-	this.navCtrl.pop();
+  this.navCtrl.pop();
 }
+
 
 toast(message) {
   let toast = this.toastCtrl.create({
