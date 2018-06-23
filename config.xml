@@ -108,7 +108,7 @@
         <variable name="ANDROID_SDK_VERSION" value="4.+" />
     </plugin>
     <allow-navigation href="http://192.168.0.110:8100" />
+    <allow-navigation href="http://192.168.0.108:8100" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="~7.0.0" />
-    <allow-navigation href="http://192.168.0.108:8100" />
 </widget>

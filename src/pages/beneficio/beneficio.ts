@@ -25,7 +25,13 @@ export class BeneficioPage {
 	latitude;
 	longitude;
 
-  benefit: Object[];
+  benefit;
+  id;
+  name;
+  description;
+  image;
+  iconmap;
+  category;
   Pos;
   api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
 
@@ -60,8 +66,15 @@ export class BeneficioPage {
     });
     this.Pos = this.getLocation();
     this.getLocation();
-    this.getData(id, token);
+
+    /*this.latitude = this.navParams.get('latitude');
+    this.longitude = this.navParams.get('longitude');
+    console.log(this.latitude);
+    console.log(this.longitude);*/
+    this.getData(id);
     this.initializeItems();
+
+    setTimeout(() => { this.getLocation(); this.getData(id); }, 5000);
 
   }
 
@@ -99,35 +112,41 @@ export class BeneficioPage {
         }
     }
 
-  getData(id, token) {
-    let loading = this.loadingCtrl.create({
+  getData(id) {
+    /*let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: '<img src="../../assets/spinner3.gif"/>'
     });
-    loading.present();
+    loading.present();*/
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('X-Requested-With', 'XMLHttpRequest');
-    headers.append('Authorization', token);
+    /*headers.append('Authorization', token);*/
 
     this.http.get(this.api + 'benefit/' + id, { headers: headers })
       .map(res => res.json())
       .subscribe(
         data => {
-          /*var benef = [];*/
+
+          var dat = data.benefit
+          var img = this.sanitizer.bypassSecurityTrustUrl('data:image/svg+xml+png+jpeg;base64,' + dat.image);
+           var a = { id: dat.id, name: dat.name, description: dat.description, image: img, iconmap: dat.iconmap, category: dat.category, latitude: dat.latitude, longitude: dat.longitude };
+
           /*data.benefit.forEach(function(data) {
-            var img = this.sanitizer.bypassSecurityTrustUrl('data:image/svg+xml+png+jpeg;base64,' + data.image);
-            benef.push({ id: data.id, name: data.name, description: data.description, image: img, iconmap: data.iconmap, category: data.category});
+            
           }, this);*/
           /*Array.prototype.forEach.call(data, data => {
             console.log(data);
             var img = this.sanitizer.bypassSecurityTrustUrl('data:image/svg+xml+png+jpeg;base64,' + data.image);
-            benef.push({ id: data.id, name: data.name, description: data.description, image: img, iconmap: data.iconmap, category: data.category});
+            benef.push({ id: data.id, name: data.name, description: data.description, image: img, iconmap: data.iconmap, category: data.category, latitude: data.latitude, longitude: data.longitude });
           });*/
-          this.benefit = data.benefit;
+
+          this.benefit = a;
+          console.log(this.latitude);
+
           this.initMap(this.benefit, this.latitude, this.longitude);
-          loading.dismiss();
+          /*loading.dismiss();*/
         },
         err => {
           if (err.status == 401){
@@ -137,7 +156,7 @@ export class BeneficioPage {
           } else {
             this.toast('Ocurrio un error');
           }
-          loading.dismiss();
+          /*loading.dismiss();*/
         },
       );
   }
@@ -156,11 +175,14 @@ export class BeneficioPage {
 
   initMap(benefit, latitude, longitude) {
     let markers = [];
-    var Centro = { lat: benefit.latitude, lng: benefit.longitude };
+    var Centro = { lat: parseFloat(benefit.latitude), lng: parseFloat(benefit.longitude) };
     var Me = { lat: latitude, lng: longitude };
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
+    console.log(Centro);
+    console.log(Me);
+
+    var map = new google.maps.Map(document.getElementById('map2'), {
+        zoom: 16,
         center: Centro,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
@@ -169,7 +191,7 @@ export class BeneficioPage {
 
     var contentString = 
       '<div class="container">' +
-          '<img class="card-img-top" height="30px" src="data:image/png;base64,' + benefit.image +'" alt="map-image' + benefit.id + '">' +
+          /*'<img class="card-img-top" height="30px" src="data:image/png;base64,' + benefit.image +'" alt="map-image' + benefit.id + '">' +*/
           '<div class="card-body">' +
             '<h5 class="box-panel-closest__title">' + benefit.name  +'</h5>' +
             '<p class="box-panel-closest__text">' + benefit.description +'</p>' +
@@ -207,11 +229,7 @@ export class BeneficioPage {
      map: map
    });
 
-    this.setMapOnAll(map, markers);
-
-/*  }).catch((error) => {
-      alert('Error getting location');
-  });*/
+  this.setMapOnAll(map, markers);
 }
 
 setMapOnAll(map, markers) {

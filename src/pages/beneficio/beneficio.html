@@ -32,6 +32,7 @@
       <button ion-button (tap)="benefit(item.id)">{{ item.name }}</button>
     </ion-item>
   </ion-list>
+	
 	<div class="card-style" padding style="border-radius:10px;">
 		<ion-row class="row-modal">
 			<ion-col col-12>
@@ -42,8 +43,10 @@
 			</ion-col>
 		</ion-row>
 	</div>
-	<div class="contenedor-map">
-		<div text-center #map id="map"></div>
-		<div style="display:none;"></div>
-	</div>
+
+	<div class="contenedor-map2">
+    	<div text-center #map2 id="map2" style="height:100%;">
+    	</div>
+    	<div style="display:none;"></div>
+  	</div>
 </ion-content>
