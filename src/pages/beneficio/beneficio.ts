@@ -181,6 +181,8 @@ export class BeneficioPage {
     console.log(Centro);
     console.log(Me);
 
+    google.maps.event.trigger(map, 'resize');
+
     var map = new google.maps.Map(document.getElementById('map2'), {
         zoom: 16,
         center: Centro,
