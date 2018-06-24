@@ -3,7 +3,7 @@
     <name>Club Beneficios UNO</name>
     <description>Aplicacion para manejo de cupones</description>
     <author email="miguel.lopez@astrapp.com" href="http://astrapp.com/">Astrapp</author>
-    <content original-src="index.html" src="http://192.168.0.110:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
