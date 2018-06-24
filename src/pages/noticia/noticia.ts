@@ -141,8 +141,8 @@ export class NoticiaPage {
       );
   }
 
-  home(){
-    this.navCtrl.popToRoot();
+  back(){
+    this.navCtrl.pop();
   }
 
   toast(message) {

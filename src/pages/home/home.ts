@@ -40,7 +40,7 @@ declare var map;
      longitude;
 
      api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
-
+     onesignalId
      token;
      Checkbox: any[] = [];
      Km;
@@ -80,18 +80,24 @@ declare var map;
                     console.log('[INFO] App resumed');
                 });
                 var notificationOpenedCallback = function(jsonData) {
-                  console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+                  alert('notificationOpenedCallback: ' + JSON.stringify(jsonData));
                 };
                 console.log("Aqui")
                 window["plugins"].OneSignal
                   .startInit("4348c8d3-0923-4a76-841d-98de77f2c29e", "4493616060")
+                  .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
                   .handleNotificationOpened(notificationOpenedCallback)
                   .endInit();
-                window.plugins.OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
-                  alert("User accepted notifications: " + accepted);
+                window["plugins"].OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
+                  //alert("User accepted notifications: " + accepted);
+                  
                 });  
+                this.oneSignal.getIds().then((ids)=>{
+                   
+                    this.onesignalId = ids.userId;
+                })
               });
-            });
+            
 
             let localData = http.get('assets/information.json').map(res => res.json().items);
                 localData.subscribe(data => {
@@ -107,8 +113,8 @@ declare var map;
             }
             else
             {
-                this.section = '1';
-            }   
+                this.section = '2';
+            }
     }
 
     ionViewWillEnter() {
@@ -121,6 +127,7 @@ declare var map;
               );
           }
         });
+       
         this.token = 'Bearer' + this.navParams.get('token');
         this.Pos = this.getLocation();
         this.getLocation();
@@ -137,9 +144,7 @@ declare var map;
     ionViewDidLoad() {
         this.menuCtrl.close();
         console.log("cargo")
-        window.plugins.OneSignal.promptForPushNotificationsWithUserResponse(function(accepted) {
-          console.log("User accepted notifications: " + accepted);
-        });
+        
      }
 
      initializeItems() {
@@ -201,11 +206,13 @@ declare var map;
         this.http.get(this.api + 'map', { headers: headers })
           .map(res => res.json())
           .subscribe(
-            data => { 
+            data => {
                 this.categories = data.categories;
                 this.benefs = data.benefs;
-                this.benefits = data.benefits;
+                this.benefits = data.benefs;
                 this.news = data.news;
+
+                console.log(this.benefits)
 
                 var n = [];
                 this.news.forEach((data) => {
@@ -245,7 +252,12 @@ declare var map;
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
             this.latitude = position.coords.latitude;
-            this.longitude = position.coords.longitude;            
+            this.longitude = position.coords.longitude;   
+            let headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            headers.append('X-Requested-With', 'XMLHttpRequest');
+            headers.append('Authorization', this.token);
+            this.http.get(this.api + 'sendMessagePosition/'+ this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })         
             return position.coords;
         }).catch((error) => {
           console.log('Error getting location');
@@ -556,8 +568,8 @@ declare var map;
         this.navCtrl.push(NoticiaPage, { id: id, token: this.token });
     }
 
-    benefit(id){
-        this.navCtrl.push(BeneficioPage, {id: id, token: this.token });
+    benefit(id, latitude, longitude){
+        this.navCtrl.push(BeneficioPage, {id: id, token: this.token, latitude: latitude, longitude: longitude });
     }
 
     presentImage(myImage) {
