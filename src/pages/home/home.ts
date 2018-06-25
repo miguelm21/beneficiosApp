@@ -82,7 +82,6 @@ declare var map;
                 var notificationOpenedCallback = function(jsonData) {
                   alert('notificationOpenedCallback: ' + JSON.stringify(jsonData));
                 };
-                console.log("Aqui")
                 window["plugins"].OneSignal
                   .startInit("4348c8d3-0923-4a76-841d-98de77f2c29e", "4493616060")
                   .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
@@ -142,7 +141,6 @@ declare var map;
      
     ionViewDidLoad() {
         this.menuCtrl.close();
-        console.log("cargo")
         
      }
 
@@ -254,6 +252,7 @@ declare var map;
             headers.append('Content-Type', 'application/json');
             headers.append('X-Requested-With', 'XMLHttpRequest');
             headers.append('Authorization', this.token);
+            alert(this.latitude+this.longitude)
             this.http.get(this.api + 'sendMessagePosition/'+ this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })         
             return position.coords;
         }).catch((error) => {
