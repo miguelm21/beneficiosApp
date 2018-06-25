@@ -247,6 +247,7 @@ declare var map;
     }
 
     getLocation() {
+        //alert(this.latitude+this.longitude)
         this.geolocation.getCurrentPosition().then((position) => {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
@@ -256,7 +257,7 @@ declare var map;
             headers.append('Content-Type', 'application/json');
             headers.append('X-Requested-With', 'XMLHttpRequest');
             headers.append('Authorization', this.token);
-            alert(this.latitude+this.longitude)
+            
             this.http.get(this.api + 'sendMessagePosition/'+ this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })         
             return position.coords;
         }).catch((error) => {

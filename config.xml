@@ -109,10 +109,7 @@
     <allow-navigation href="http://192.168.0.110:8100" />
     <allow-navigation href="http://192.168.0.108:8100" />
     <plugin name="onesignal-cordova-plugin" spec="^2.4.1" />
-    <engine name="browser" spec="5.0.3" />
-<<<<<<< HEAD
     <allow-navigation href="http://192.168.0.108:8100" />
-=======
->>>>>>> 5f3cae39dda6750964126e98689fe29040df2820
-    <engine name="android" spec="~7.0.0" />
+    <engine name="browser" spec="5.0.3" />
+    <engine name="android" spec="^7.0.0" />
 </widget>
