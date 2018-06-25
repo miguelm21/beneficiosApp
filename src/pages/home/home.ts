@@ -252,17 +252,23 @@ declare var map;
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
             this.latitude = position.coords.latitude;
-            this.longitude = position.coords.longitude;   
-            let headers = new Headers();
-            headers.append('Content-Type', 'application/json');
-            headers.append('X-Requested-With', 'XMLHttpRequest');
-            headers.append('Authorization', this.token);
-            
-            this.http.get(this.api + 'sendMessagePosition/'+ this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })         
-            return position.coords;
+            this.longitude = position.coords.longitude;  
+            this.sendNotification(this.latitude, this.longitude, this.onesignalId); 
+           return position.coords;
         }).catch((error) => {
           console.log('Error getting location');
       });
+    }
+
+
+    sendNotification(latitude, longitude, id){
+         let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
+        
+        this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })         
+            
     }
   
     initMap(benefits, latitude, longitude) {
