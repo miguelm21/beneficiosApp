@@ -80,8 +80,9 @@ declare var map;
                     console.log('[INFO] App resumed');
                 });
                 var notificationOpenedCallback = function(jsonData) {
-                  alert('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+                     this.benefit(jsonData.notification.payload.additionalData.id)
                 };
+
                 window["plugins"].OneSignal
                   .startInit("4348c8d3-0923-4a76-841d-98de77f2c29e", "4493616060")
                   .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
