@@ -80,7 +80,7 @@ export class RegisterPage {
       this.http.post(this.api + 'register', credentials, { headers: headers })
         .map(res => res.json())
         .subscribe(
-          data => { this.toast('Registro exitoso'); this.navCtrl.setRoot(LoginPage); loading.dismiss(); },
+          data => { this.toast('Registro exitoso'); this.navCtrl.push(LoginPage); loading.dismiss(); },
           err => {
             loading.dismiss();
             if (err.status == 401){
