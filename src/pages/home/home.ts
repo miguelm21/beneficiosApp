@@ -84,7 +84,7 @@ declare var map;
                 };
 
                 window["plugins"].OneSignal
-                  .startInit("4348c8d3-0923-4a76-841d-98de77f2c29e", "4493616060")
+                  .startInit("fe180572-6b5a-4d0f-82fc-aa1db3ad58a6", "658919823391")
                   .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
                   .handleNotificationOpened(notificationOpenedCallback)
                   .endInit();
