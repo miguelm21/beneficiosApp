@@ -54,7 +54,7 @@
 			// Main Header
 			.searchbar-md .searchbar-search-icon {
 				left: 25px;
-				top: 9px;
+				top: 4px;
 				width: 21px;
 				height: 21px;
 			}
@@ -791,6 +791,12 @@ hr {
 		content: "\f1c3";
 		font-size: 30px;
 	}
+	.searchbar-md .searchbar-search-icon {
+    left: 25px;
+    top: 9px;
+    width: 21px;
+    height: 21px;
+}
 	.ion-md-menu:before {
 		content: "\f32a";
 		font-size: 30px;

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, Slides, LoadingController, ToastController } from 'ionic-angular';
+import { Platform, Nav, Slides, LoadingController, ToastController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Http, Headers } from "@angular/http";
@@ -29,6 +29,7 @@ export class MyApp {
   constructor(
     platform: Platform,
     statusBar: StatusBar,
+    public events: Events,
     public splashScreen: SplashScreen,
     public http: Http,
     public loadingCtrl: LoadingController,
@@ -51,7 +52,22 @@ export class MyApp {
     ];
 
     this.storage.get('token').then( data => {
-      this.token = 'Bearer' + data;
+      if(data != null)
+      {
+        this.token = 'Bearer' + data;
+      }
+      else if(data == null)
+      {
+        this.token = null;
+      }
+    }).catch(err => {
+      this.token = null;
+    });
+
+    console.log(this.token);
+
+    events.subscribe('user:login', (token) => {
+      this.token = token;
     });
   }
 

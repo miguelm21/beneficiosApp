@@ -113,8 +113,8 @@ declare var map;
             }
             else
             {
-                this.section = '1';
-            }   
+                this.section = '2';
+            }
     }
 
     ionViewWillEnter() {
@@ -127,6 +127,7 @@ declare var map;
               );
           }
         });
+       
         this.token = 'Bearer' + this.navParams.get('token');
         this.Pos = this.getLocation();
         this.getLocation();
@@ -205,11 +206,13 @@ declare var map;
         this.http.get(this.api + 'map', { headers: headers })
           .map(res => res.json())
           .subscribe(
-            data => { 
+            data => {
                 this.categories = data.categories;
                 this.benefs = data.benefs;
-                this.benefits = data.benefits;
+                this.benefits = data.benefs;
                 this.news = data.news;
+
+                console.log(this.benefits)
 
                 var n = [];
                 this.news.forEach((data) => {
@@ -565,8 +568,8 @@ declare var map;
         this.navCtrl.push(NoticiaPage, { id: id, token: this.token });
     }
 
-    benefit(id){
-        this.navCtrl.push(BeneficioPage, {id: id, token: this.token });
+    benefit(id, latitude, longitude){
+        this.navCtrl.push(BeneficioPage, {id: id, token: this.token, latitude: latitude, longitude: longitude });
     }
 
     presentImage(myImage) {

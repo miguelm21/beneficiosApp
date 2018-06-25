@@ -92,7 +92,7 @@ export class CategoryPage {
   getCategory(id, token) {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>'
     });
 
     loading.present();
@@ -177,7 +177,7 @@ export class CategoryPage {
   }
 
   home(){
-  	this.navCtrl.popToRoot();
+  	this.navCtrl.pop();
   }
 
   benefit(id){
