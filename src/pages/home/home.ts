@@ -79,8 +79,8 @@ declare var map;
                 this.platform.resume.subscribe(() => {
                     console.log('[INFO] App resumed');
                 });
-                var notificationOpenedCallback = function(jsonData) {
-                     this.benefit(jsonData.notification.payload.additionalData.id)
+                var notificationOpenedCallback = (jsonData)=> {
+                    this.benefit(jsonData.notification.payload.additionalData.id,this.latitude, this.longitude)
                 };
 
                 window["plugins"].OneSignal
@@ -247,12 +247,11 @@ declare var map;
     }
 
     getLocation() {
-        //alert(this.latitude+this.longitude)
         this.geolocation.getCurrentPosition().then((position) => {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
             this.latitude = position.coords.latitude;
-            this.longitude = position.coords.longitude;  
+            this.longitude = position.coords.longitude;    
             this.sendNotification(this.latitude, this.longitude, this.onesignalId); 
            return position.coords;
         }).catch((error) => {
@@ -267,7 +266,16 @@ declare var map;
         headers.append('X-Requested-With', 'XMLHttpRequest');
         headers.append('Authorization', this.token);
         
-        this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })         
+        this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
+                .map(res => res.json())
+                .subscribe(
+                    data => { console.log(data) },
+                    err => {
+                     
+                        console.log('Ocurrio un error en la notificacion');
+
+                    },
+                  );         
             
     }
   
