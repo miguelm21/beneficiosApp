@@ -70,6 +70,17 @@ declare var map;
         private platform: Platform,
         private oneSignal: OneSignal,
         public geolocation: Geolocation) {
+            this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+              if(canRequest) {
+                // the accuracy option will be ignored by iOS
+                this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+                  () => console.log('Request successful'),
+                  error => console.log('Error requesting location permissions', error)
+                );
+              }
+
+            });
+            
             platform.ready().then(() => {    
                 this.platform.pause.subscribe(() => {
                     console.log('[INFO] App paused');
