@@ -21,7 +21,7 @@ export class OpcionesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController, public storage:Storage) {
     this.storage.get("notificationPermission").then((Data)=>{
-      alert(Data)
+      
       this.estadoPositivo = Data === "true" || Data === null;
       this.Text = (!this.estadoPositivo) ?  "Activar Notificaciones" : "Desactivar Notificaciones";
 
@@ -37,6 +37,8 @@ export class OpcionesPage {
   	this.Text = (this.estadoPositivo) ?  "Activar Notificaciones" : "Desactivar Notificaciones";
     this.estadoPositivo = !this.estadoPositivo; 
     this.storage.set("notificationPermission", (this.estadoPositivo) ?  "true" : "false")
+   
+
   }
 
   MoveToHome(){
