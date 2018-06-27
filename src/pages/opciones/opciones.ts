@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
-
+import { Storage } from "@ionic/storage";
 /**
  * Generated class for the OpcionesPage page.
  *
@@ -19,7 +19,13 @@ export class OpcionesPage {
 	estadoPositivo: boolean = true;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController, public storage:Storage) {
+    this.storage.get("notificationPermission").then((Data)=>{
+      alert(Data)
+      this.estadoPositivo = Data === "true" || Data === null;
+      this.Text = (!this.estadoPositivo) ?  "Activar Notificaciones" : "Desactivar Notificaciones";
+
+    })
   }
 
   ionViewDidLoad() {
@@ -30,6 +36,7 @@ export class OpcionesPage {
   change(){
   	this.Text = (this.estadoPositivo) ?  "Activar Notificaciones" : "Desactivar Notificaciones";
     this.estadoPositivo = !this.estadoPositivo; 
+    this.storage.set("notificationPermission", (this.estadoPositivo) ?  "true" : "false")
   }
 
   MoveToHome(){

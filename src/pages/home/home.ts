@@ -8,7 +8,6 @@ import { Slides, LoadingController} from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 import { OneSignal, OSNotificationPayload } from '@ionic-native/onesignal';
 import 'rxjs/add/operator/map'
-
 import { CategoryPage } from '../category/category';
 import { NoticiaPage } from '../noticia/noticia';
 import { BeneficioPage } from '../beneficio/beneficio';
@@ -69,7 +68,8 @@ declare var map;
         public toastCtrl: ToastController,
         private platform: Platform,
         private oneSignal: OneSignal,
-        public geolocation: Geolocation) {
+        public geolocation: Geolocation,
+        public storage: Storage) {
             this.locationAccuracy.canRequest().then((canRequest: boolean) => {
               if(canRequest) {
                 // the accuracy option will be ignored by iOS
@@ -150,6 +150,7 @@ declare var map;
         /*this.SendMessage();*/
 
         setInterval(() => { this.getLocation(); this.getMapData(); }, 15000);
+
     }
      
     ionViewDidLoad() {
@@ -258,6 +259,7 @@ declare var map;
     }
 
     getLocation() {
+        
         this.geolocation.getCurrentPosition().then((position) => {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
@@ -276,17 +278,21 @@ declare var map;
         headers.append('Content-Type', 'application/json');
         headers.append('X-Requested-With', 'XMLHttpRequest');
         headers.append('Authorization', this.token);
-        
-        this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
-                .map(res => res.json())
-                .subscribe(
-                    data => { console.log(data) },
-                    err => {
-                     
-                        console.log('Ocurrio un error en la notificacion');
+        this.storage.get("notificationPermission").then(data=>{
+            if (data === "true" || data === null  ) {
+                 this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
+                    .map(res => res.json())
+                    .subscribe(
+                        data => { console.log(data) },
+                        err => {
+                         
+                            console.log('Ocurrio un error en la notificacion');
 
-                    },
-                  );         
+                        },
+                    );      
+            }
+        })
+          
             
     }
   
