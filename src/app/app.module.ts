@@ -71,6 +71,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     Facebook,
     GooglePlus,
     Geolocation,
+    
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

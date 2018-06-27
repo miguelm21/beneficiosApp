@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
+import { Injectable } from '@angular/core';
+
 /**
  * Generated class for the OpcionesPage page.
  *
@@ -15,29 +17,35 @@ import { Storage } from "@ionic/storage";
 })
 export class OpcionesPage {
 	Notificaciones = "true";
-	Text: string = "Desactivar Notificaciones";
+	Text: string = "Activar notificaciones";
 	estadoPositivo: boolean = true;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController, public storage:Storage) {
     this.storage.get("notificationPermission").then((Data)=>{
-      
+      //alert(Data)
       this.estadoPositivo = Data === "true" || Data === null;
-      this.Text = (!this.estadoPositivo) ?  "Activar Notificaciones" : "Desactivar Notificaciones";
+      
 
     })
   }
-
+  static get parameters() { return [[NavController], [Storage], [MenuController], [NavParams], [NavController]]; }
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpcionesPage');
     this.menuCtrl.close();
   }
 
   change(){
-  	this.Text = (this.estadoPositivo) ?  "Activar Notificaciones" : "Desactivar Notificaciones";
     this.estadoPositivo = !this.estadoPositivo; 
-    this.storage.set("notificationPermission", (this.estadoPositivo) ?  "true" : "false")
-   
+    this.storage.set("notificationPermission", (this.estadoPositivo) ?  "true" : "false").then((data)=>{
+     // alert(data)
+    })
+    /*this.storage.get("notificationPermission").then((Data)=>{
+      
+      alert(Data);
+      
+
+    })*/
 
   }
 
