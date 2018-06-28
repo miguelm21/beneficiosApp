@@ -223,7 +223,7 @@ declare var map;
                 this.benefits = data.benefs;
                 this.news = data.news;
 
-                console.log(this.benefits)
+                console.log(this.benefs)
 
                 var n = [];
                 this.news.forEach((data) => {
@@ -242,10 +242,10 @@ declare var map;
 
                     var date2 = day + ' ' + monthNames[monthIndex];
 
-                    this.news2.push({ id: data.id, title: data.title, text: data.text, image: data.image, mime: data.mime, size: data.size, user: data.user, day: day, month: monthNames[monthIndex] })
+                    this.news2.push({ id: data.id, title: data.title, text: data.text, image: data.image, mime: data.mime, size: data.size, user: data.user, day: day, month: monthNames[monthIndex] });
+                    this.initMap(this.benefs,this.latitude, this.longitude);
                 });
-
-                this.initMap(this.benefs,this.latitude, this.longitude); },
+            },
             err => {
               if (err.status == 401){
                 this.toast('No se encontraron datos');
@@ -297,6 +297,7 @@ declare var map;
     }
   
     initMap(benefits, latitude, longitude) {
+        console.log(benefits);
         let markers = [];
         var Centro = { lat: latitude, lng: longitude };
 

@@ -131,7 +131,7 @@ export class BeneficioPage {
 
           var dat = data.benefit
           var img = this.sanitizer.bypassSecurityTrustUrl('data:image/svg+xml+png+jpeg;base64,' + dat.image);
-           var a = { id: dat.id, name: dat.name, description: dat.description, image: img, iconmap: dat.iconmap, category: dat.category, latitude: dat.latitude, longitude: dat.longitude };
+           var a = { id: dat.id, name: dat.name, description: dat.description, image: img, iconmap: dat.iconmap, category: dat.category, latitude: dat.latitude, longitude: dat.longitude, percent: dat.percent };
 
           /*data.benefit.forEach(function(data) {
             
