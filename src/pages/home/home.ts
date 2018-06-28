@@ -8,7 +8,6 @@ import { Slides, LoadingController} from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 import { OneSignal, OSNotificationPayload } from '@ionic-native/onesignal';
 import 'rxjs/add/operator/map'
-
 import { CategoryPage } from '../category/category';
 import { NoticiaPage } from '../noticia/noticia';
 import { BeneficioPage } from '../beneficio/beneficio';
@@ -69,7 +68,19 @@ declare var map;
         public toastCtrl: ToastController,
         private platform: Platform,
         private oneSignal: OneSignal,
-        public geolocation: Geolocation) {
+        public geolocation: Geolocation,
+        public storage: Storage) {
+            this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+              if(canRequest) {
+                // the accuracy option will be ignored by iOS
+                this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+                  () => console.log('Request successful'),
+                  error => console.log('Error requesting location permissions', error)
+                );
+              }
+
+            });
+            
             platform.ready().then(() => {    
                 this.platform.pause.subscribe(() => {
                     console.log('[INFO] App paused');
@@ -79,12 +90,12 @@ declare var map;
                 this.platform.resume.subscribe(() => {
                     console.log('[INFO] App resumed');
                 });
-                var notificationOpenedCallback = function(jsonData) {
-                  alert('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+                var notificationOpenedCallback = (jsonData)=> {
+                    this.benefit(jsonData.notification.payload.additionalData.id,this.latitude, this.longitude)
                 };
-                console.log("Aqui")
+
                 window["plugins"].OneSignal
-                  .startInit("4348c8d3-0923-4a76-841d-98de77f2c29e", "4493616060")
+                  .startInit("fe180572-6b5a-4d0f-82fc-aa1db3ad58a6", "658919823391")
                   .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
                   .handleNotificationOpened(notificationOpenedCallback)
                   .endInit();
@@ -139,11 +150,11 @@ declare var map;
         /*this.SendMessage();*/
 
         setInterval(() => { this.getLocation(); this.getMapData(); }, 15000);
+
     }
      
     ionViewDidLoad() {
         this.menuCtrl.close();
-        console.log("cargo")
         
      }
 
@@ -212,7 +223,7 @@ declare var map;
                 this.benefits = data.benefs;
                 this.news = data.news;
 
-                console.log(this.benefits)
+                console.log(this.benefs)
 
                 var n = [];
                 this.news.forEach((data) => {
@@ -231,10 +242,10 @@ declare var map;
 
                     var date2 = day + ' ' + monthNames[monthIndex];
 
-                    this.news2.push({ id: data.id, title: data.title, text: data.text, image: data.image, mime: data.mime, size: data.size, user: data.user, day: day, month: monthNames[monthIndex] })
+                    this.news2.push({ id: data.id, title: data.title, text: data.text, image: data.image, mime: data.mime, size: data.size, user: data.user, day: day, month: monthNames[monthIndex] });
+                    this.initMap(this.benefs,this.latitude, this.longitude);
                 });
-
-                this.initMap(this.benefs,this.latitude, this.longitude); },
+            },
             err => {
               if (err.status == 401){
                 this.toast('No se encontraron datos');
@@ -248,23 +259,48 @@ declare var map;
     }
 
     getLocation() {
+     
         this.geolocation.getCurrentPosition().then((position) => {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
             this.latitude = position.coords.latitude;
-            this.longitude = position.coords.longitude;   
-            let headers = new Headers();
-            headers.append('Content-Type', 'application/json');
-            headers.append('X-Requested-With', 'XMLHttpRequest');
-            headers.append('Authorization', this.token);
-            this.http.get(this.api + 'sendMessagePosition/'+ this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })         
-            return position.coords;
+            this.longitude = position.coords.longitude;    
+            this.sendNotification(this.latitude, this.longitude, this.onesignalId); 
+           return position.coords;
         }).catch((error) => {
           console.log('Error getting location');
       });
     }
+
+
+    sendNotification(latitude, longitude, id){
+         let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+        headers.append('Authorization', this.token);
+        
+        this.storage.get("notificationPermission").then(data=>{
+      
+            if (data === "true" || data === null) {
+                
+                this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
+                    .map(res => res.json())
+                    .subscribe(
+                        data => { console.log(data) },
+                        err => {
+                         
+                            console.log('Ocurrio un error en la notificacion');
+
+                        },
+                    );      
+            }
+        })
+          
+            
+    }
   
     initMap(benefits, latitude, longitude) {
+        console.log(benefits);
         let markers = [];
         var Centro = { lat: latitude, lng: longitude };
 
