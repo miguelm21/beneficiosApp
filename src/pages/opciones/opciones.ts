@@ -25,8 +25,6 @@ export class OpcionesPage {
     this.storage.get("notificationPermission").then((Data)=>{
       //alert(Data)
       this.estadoPositivo = Data === "true" || Data === null;
-      
-
     })
   }
   static get parameters() { return [[NavController], [Storage], [MenuController], [NavParams], [NavController]]; }
