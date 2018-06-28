@@ -277,25 +277,18 @@ declare var map;
          let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('X-Requested-With', 'XMLHttpRequest');
-        headers.append('Authorization', this.token);
-        
-        this.storage.get("notificationPermission").then(data=>{
-      
-            if (data === "true" || data === null) {
-                
-                this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
-                    .map(res => res.json())
-                    .subscribe(
-                        data => { console.log(data) },
-                        err => {
-                         
-                            console.log('Ocurrio un error en la notificacion');
+        headers.append('Authorization', this.token);          
+        this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
+            .map(res => res.json())
+            .subscribe(
+                data => { console.log(data) },
+                err => {
+                 
+                    console.log('Ocurrio un error en la notificacion');
 
-                        },
-                    );      
-            }
-        })
-          
+                },
+            );      
+
             
     }
   
