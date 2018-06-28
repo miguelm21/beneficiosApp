@@ -30,8 +30,8 @@ export class OpcionesPage {
              this.estadoPositivo = data.state == 1 ;
         });
      
-        })
     })
+  
    
   }
   ionViewDidLoad() {
