@@ -266,6 +266,7 @@ declare var map;
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;    
             this.sendNotification(this.latitude, this.longitude, this.onesignalId); 
+
            return position.coords;
         }).catch((error) => {
           console.log('Error getting location');
@@ -280,7 +281,7 @@ declare var map;
         headers.append('Authorization', this.token);
         
         this.storage.get("notificationPermission").then(data=>{
-      
+              alert("Se ejecuto" + data + this.longitude+ this.latitude)
             if (data === "true" || data === null) {
                 
                 this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
