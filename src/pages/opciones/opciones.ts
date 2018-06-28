@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
-import { Injectable } from '@angular/core';
 
 /**
  * Generated class for the OpcionesPage page.
@@ -23,11 +22,9 @@ export class OpcionesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public menuCtrl: MenuController, public storage:Storage) {
     this.storage.get("notificationPermission").then((Data)=>{
-      //alert(Data)
       this.estadoPositivo = Data === "true" || Data === null;
     })
   }
-  static get parameters() { return [[NavController], [Storage], [MenuController], [NavParams], [NavController]]; }
   ionViewDidLoad() {
     console.log('ionViewDidLoad OpcionesPage');
     this.menuCtrl.close();
@@ -36,14 +33,8 @@ export class OpcionesPage {
   change(){
     this.estadoPositivo = !this.estadoPositivo; 
     this.storage.set("notificationPermission", (this.estadoPositivo) ?  "true" : "false").then((data)=>{
-     // alert(data)
-    })
-    /*this.storage.get("notificationPermission").then((Data)=>{
-      
-      alert(Data);
-      
-
-    })*/
+      alert(data)
+    });
 
   }
 
