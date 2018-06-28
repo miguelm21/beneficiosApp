@@ -31,11 +31,12 @@ export class OpcionesPage {
   }
 
   change(){
-    this.estadoPositivo = !this.estadoPositivo; 
-    this.storage.set("notificationPermission", (this.estadoPositivo) ?  "true" : "false").then((data)=>{
-      alert(data)
-    });
 
+    this.estadoPositivo = !this.estadoPositivo; 
+    //alert(this.estadoPositivo)
+  }
+  ionViewDidLeave(){
+    this.storage.set("notificationPermission", (this.estadoPositivo) ?  "true" : "false").then((data)=>{});
   }
 
   MoveToHome(){

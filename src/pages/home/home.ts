@@ -259,7 +259,7 @@ declare var map;
     }
 
     getLocation() {
-        this.storage.get("notificationPermission").then(data=>{alert(data+this.latitude)})
+     
         this.geolocation.getCurrentPosition().then((position) => {
             let latitude = position.coords.latitude;
             let longitude = position.coords.longitude;
@@ -280,7 +280,7 @@ declare var map;
         headers.append('Authorization', this.token);
         
         this.storage.get("notificationPermission").then(data=>{
-            alert(data+this.longitude+this.latitude);
+      
             if (data === "true" || data === null) {
                 
                 this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
