@@ -36,7 +36,7 @@ export class OpcionesPage {
   }
   ionViewDidLoad() {
     this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ this.estadoPositivo ? "1" : "0").map(res => res.json())
-      .localData.subscribe(data => {});
+      .subscribe(data => {});
     console.log('ionViewDidLoad OpcionesPage');
     this.menuCtrl.close();
   }
@@ -47,12 +47,11 @@ export class OpcionesPage {
 
     this.estadoPositivo = !this.estadoPositivo; 
     this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ this.estadoPositivo ? "1" : "0").map(res => res.json())
-    .localData.subscribe(data => {});
-    //alert(this.estadoPositivo)
+    .subscribe(data => {});
   }
   ionViewDidLeave(){
       this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ this.estadoPositivo ? "1" : "0").map(res => res.json())
-      .localData.subscribe(data => {});
+      .subscribe(data => {});
      
   }
 
