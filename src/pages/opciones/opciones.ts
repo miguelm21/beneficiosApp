@@ -35,7 +35,7 @@ export class OpcionesPage {
    
   }
   ionViewDidLoad() {
-    this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ this.estadoPositivo ? "1" : "0").map(res => res.json())
+    this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0")).map(res => res.json())
       .subscribe(data => {});
     console.log('ionViewDidLoad OpcionesPage');
     this.menuCtrl.close();
@@ -48,12 +48,12 @@ export class OpcionesPage {
     this.estadoPositivo = !this.estadoPositivo; 
     alert(this.estadoPositivo)
     alert(this.onesignalId)
-    alert(this.api+"changePermissions/"+this.onesignalId+"/true/"+ this.estadoPositivo ? "1" : "0")
-    this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ this.estadoPositivo ? "1" : "0").map(res => res.json())
+    alert(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0"))
+    this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0")).map(res => res.json())
     .subscribe(data => {});
   }
   ionViewDidLeave(){
-      this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ this.estadoPositivo ? "1" : "0").map(res => res.json())
+      this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0")).map(res => res.json())
       .subscribe(data => {});
      
   }
