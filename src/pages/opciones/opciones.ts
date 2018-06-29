@@ -20,6 +20,7 @@ export class OpcionesPage {
 	estadoPositivo: boolean = true;
   api = "https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/";
   onesignalId:string;
+  contructorChange:boolean = false;
 
   constructor( private oneSignal: OneSignal, public navCtrl: NavController, public navParams: NavParams , public http:Http ,public menuCtrl: MenuController) {
     this.oneSignal.getIds().then((ids)=>{
@@ -28,6 +29,7 @@ export class OpcionesPage {
           .map(res => res.json())
           .subscribe(data => {
                this.estadoPositivo = data.state == 1 ;
+               this.contructorChange = true;
           });
      
     })
@@ -35,29 +37,18 @@ export class OpcionesPage {
    
   }
   ionViewDidLoad() {
-    this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0")).map(res => res.json())
-      .subscribe(data => {});
-    console.log('ionViewDidLoad OpcionesPage');
+   
     this.menuCtrl.close();
   }
   
 
 
   change(){
-
-    this.estadoPositivo = !this.estadoPositivo; 
-    //alert(this.estadoPositivo)
-    //alert(this.onesignalId)
-    //alert(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0"))
-    this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0")).map(res => res.json())
-    .subscribe(data => {});
+    
+     this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0")).map(res => res.json())
+      .subscribe(data => {});                                                                                                                                                                                                                                                       
+ 
   }
-  ionViewDidLeave(){
-      this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0")).map(res => res.json())
-      .subscribe(data => {});
-     
-  }
-
   MoveToHome(){
   	this.navCtrl.pop();
   }
