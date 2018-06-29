@@ -32,7 +32,8 @@
 		<ion-col col-12 text-center style="margin-top:-38%;">
 			<div class="container">
 				<h1 text-center style="font-family:Monserrat;color:white;">Perfil de Usuario</h1>
-				<!-- <img class="pantalla-1" src="assets/imgs/userperfil.png" alt="Imagen Principal" #myImage (click)="presentImage(myImage)"> -->
+				<img *ngIf="!profile?.avatar" class="pantalla-1" src="assets/imgs/userperfil.png" alt="Imagen Principal" #myImage (click)="presentImage(myImage)">
+				<img *ngIf="profile?.avatar" class="pantalla-1" src="profile?.avatar" alt="Imagen Principal" #myImage (click)="presentImage(myImage)">
 			</div>
 		</ion-col>
 		<ion-col col-12 text-center style="margin-top:20%">

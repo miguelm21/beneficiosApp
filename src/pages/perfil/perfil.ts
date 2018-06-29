@@ -47,17 +47,21 @@ export class PerfilPage {
     this.storage.get('token').then( data => {
       if(data != null) {
         if(data == 'token_expired') {
+          console.log('a');
           this.navCtrl.setRoot(LoginPage);
         }
         else if(data == undefined) {
+          console.log('b');
           this.navCtrl.setRoot(LoginPage);
         }
         else if(data == 'Unauthenticated.') {
+          console.log('c');
           this.navCtrl.setRoot(LoginPage);
         }
         else {
-          this.token = 'Bearer' + data;
-          var token = 'Bearer' + data;
+          console.log('d');
+          this.token = 'Bearer ' + data;
+          var token = 'Bearer ' + data;
           this.getProfile(token);
         }
       }
@@ -68,7 +72,7 @@ export class PerfilPage {
   getProfile(token) {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>'
     });
 
     loading.present();
@@ -77,7 +81,7 @@ export class PerfilPage {
     headers.append('X-Requested-With', 'XMLHttpRequest');
     headers.append('Authorization', token);
 
-    this.http.get(this.api + 'me/', { headers: headers })
+    this.http.post(this.api + 'me', {}, { headers: headers })
       .map(res => res.json())
       .subscribe(
         data => {

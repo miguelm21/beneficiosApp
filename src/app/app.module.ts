@@ -5,9 +5,11 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { IonicStorageModule } from '@ionic/storage';
+import { FileTransfer } from '@ionic-native/file-transfer';
 import { OneSignal } from '@ionic-native/onesignal';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Camera } from '@ionic-native/camera';
 
 // import { ExpandableHeader } from '../components/expandable-header/expandable-header';
 import { GoogleMaps } from '@ionic-native/google-maps';
@@ -70,6 +72,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     OneSignal,
     Facebook,
     GooglePlus,
+    FileTransfer,
+    Camera,
     Geolocation,
     
     {provide: ErrorHandler, useClass: IonicErrorHandler},
