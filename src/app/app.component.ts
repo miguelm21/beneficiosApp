@@ -54,7 +54,7 @@ export class MyApp {
     this.storage.get('token').then( data => {
       if(data != null)
       {
-        this.token = 'Bearer' + data;
+        this.token = 'Bearer ' + data;
       }
       else if(data == null)
       {

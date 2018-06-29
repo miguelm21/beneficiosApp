@@ -71,6 +71,12 @@
 					<ion-input type="password" [(ngModel)]="Password_confirmation" (keyup.enter)="keytab($event)"></ion-input>
 				</ion-item>
 			</ion-col>
+			<ion-col col-12>
+			        <button color="grayLogo" ion-button block icon-left (tap)="lookingPhoto()">
+			          <ion-icon name="photos"></ion-icon>
+			          Seleccionar Foto
+			        </button>
+			</ion-col>
 			<ion-col col-12 style="margin-top: 5%;">
 				<button ion-button color="light" style="height: 42px;font-size:1.8rem;" (tap)="register()" icon-start block outline>
 					Registrar
@@ -84,12 +90,12 @@
 		</ion-row>
 		<ion-row padding style="margin-top:2%;">
 			<ion-col col-12>
-				<button ion-button class="loginBtn loginBtn--facebook" block>
+				<button ion-button class="loginBtn loginBtn--facebook" block (tap)="fblogin()">
 					Conectar con&nbsp;&nbsp;<b>FACEBOOK</b>
 				</button>
 			</ion-col>
 			<ion-col col-12>
-				<button ion-button class="loginBtn loginBtn--google" block>
+				<button ion-button class="loginBtn loginBtn--google" block (tap)="gpluslogin()">
 					Conectar con&nbsp;&nbsp;<b>GOOGLE+</b>
 				</button>
 			</ion-col>

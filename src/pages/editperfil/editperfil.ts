@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 /**
  * Generated class for the EditperfilPage page.
@@ -25,6 +27,8 @@ export class EditperfilPage {
   Province;
   City;
   Domicile;
+  image;
+  imgPreview
 
   api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
 
@@ -33,6 +37,8 @@ export class EditperfilPage {
     public navParams: NavParams,
     public toastCtrl: ToastController,
     private http: Http,
+    public transfer: FileTransfer,
+    public camera: Camera,
     public loadingCtrl: LoadingController) {
   }
 
@@ -51,7 +57,7 @@ export class EditperfilPage {
   UpdateProfile() {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>'
     });
     loading.present();
 
@@ -60,7 +66,7 @@ export class EditperfilPage {
     headers.append('X-Requested-With', 'XMLHttpRequest');
     headers.append('Authorization', this.token);
 
-    var credentials = JSON.stringify({ name: this.Name, dni: this.Dni, phone: this.Phone, province: this.Province, city: this.City, domicile: this.Domicile });
+    var credentials = JSON.stringify({ image: this.image, name: this.Name, dni: this.Dni, phone: this.Phone, province: this.Province, city: this.City, domicile: this.Domicile });
     this.http.put(this.api +'updateprofile/' + this.profile.id, credentials, { headers: headers })
       .map(res => res.json())
       .subscribe(
@@ -76,6 +82,28 @@ export class EditperfilPage {
           }
         },
       );
+  }
+
+  lookingPhoto(){
+      const options: CameraOptions = {
+        quality: 35,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+        encodingType: this.camera.EncodingType.JPEG,
+        correctOrientation: true,
+        saveToPhotoAlbum: false
+      }
+
+      this.camera.getPicture(options).then((imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64:
+        this.imgPreview = 'data:image/jpeg;base64,' + imageData;
+        this.image = imageData;
+      }, (err) => {
+         // Handle error
+         console.error('Error en la camara', + err);
+       }
+     );
   }
 
   back(){

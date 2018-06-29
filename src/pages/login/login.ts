@@ -83,7 +83,7 @@ export class LoginPage {
         let headers = new Headers();
           headers.append('Content-Type', 'application/json');
 
-          var credentials = JSON.stringify({ id: this.fbid, email: this.userData.email, name: this.userData.first_name });
+          var credentials = JSON.stringify({ image: this.userData.picture, id: this.fbid, email: this.userData.email, name: this.userData.first_name });
           this.http.post(this.api + 'auth/facebook/callback', credentials, { headers: headers })
           .map(res => res.json())
           .subscribe(
@@ -146,7 +146,7 @@ export class LoginPage {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        var credentials = JSON.stringify({ id: res.userId, email: res.email, name: res.givenName });
+        var credentials = JSON.stringify({ id: res.userId, email: res.email, name: res.givenName, image: res.imageUrl });
         this.http.post(this.api + 'auth/google/callback', credentials, { headers: headers })
         .map(res => res.json())
         .subscribe(

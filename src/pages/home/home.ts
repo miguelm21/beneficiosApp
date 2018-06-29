@@ -139,7 +139,8 @@ declare var map;
           }
         });
        
-        this.token = 'Bearer' + this.navParams.get('token');
+        this.token = 'Bearer ' + this.navParams.get('token');
+        console.log(this.token);
         this.Pos = this.getLocation();
         this.getLocation();
         this.getMapData();
