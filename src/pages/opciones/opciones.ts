@@ -46,6 +46,7 @@ export class OpcionesPage {
   change(){
 
     this.estadoPositivo = !this.estadoPositivo; 
+    alert(this.estadoPositivo)
     this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ this.estadoPositivo ? "1" : "0").map(res => res.json())
     .subscribe(data => {});
   }
