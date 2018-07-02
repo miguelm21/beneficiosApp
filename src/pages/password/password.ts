@@ -51,7 +51,8 @@ export class PasswordPage {
   UpdatePassword() {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>',
+      dismissOnPageChange: false
     });
     loading.present();
 
@@ -81,7 +82,8 @@ export class PasswordPage {
   logout() {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>',
+      dismissOnPageChange: false
     });
     loading.present();
 

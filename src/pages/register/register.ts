@@ -63,7 +63,8 @@ export class RegisterPage {
   ionViewDidLoad() {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner2.gif"/>'
+      content: '<img src="../../assets/spinner2.gif"/>',
+      dismissOnPageChange: false
     });
     loading.present();
     loading.dismiss();
@@ -110,7 +111,8 @@ export class RegisterPage {
   {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>',
+      dismissOnPageChange: false
     });
     loading.present();
     this.fb.login(['email', 'public_profile'])
@@ -130,7 +132,7 @@ export class RegisterPage {
           .map(res => res.json())
           .subscribe(
             data => {
-              this.authSuccess(data.token);
+              this.authSuccess(data.token, data.user);
               this.events.publish('user:login', data.access_token);
               loading.dismiss();
               this.navCtrl.setRoot(HomePage, { token: this.token });
@@ -180,7 +182,8 @@ export class RegisterPage {
   {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>',
+      dismissOnPageChange: false
     });
     loading.present();
     this.googlePlus.login({})
@@ -193,7 +196,7 @@ export class RegisterPage {
         .map(res => res.json())
         .subscribe(
           data => {
-            this.authSuccess(data.token);
+            this.authSuccess(data.token, data.user);
             this.events.publish('user:login', data.access_token);
             loading.dismiss();
             this.navCtrl.setRoot(HomePage, { token: this.token });
@@ -230,9 +233,10 @@ export class RegisterPage {
     });
   }
 
-  authSuccess(token) {
+  authSuccess(token, user) {
     this.error = null;
     this.storage.set('token', token);
+    this.storage.set('username', user);
     this.token = token;
     var sub = this.jwtHelper.decodeToken(token).sub;
     this.storage.set('profile', sub);
@@ -243,7 +247,8 @@ export class RegisterPage {
     {
       var loading = this.loadingCtrl.create({
         spinner: 'hide',
-        content: '<img src="../../assets/spinner3.gif"/>'
+        content: '<img src="../../assets/spinner3.gif"/>',
+        dismissOnPageChange: false
       });
       loading.present();
 

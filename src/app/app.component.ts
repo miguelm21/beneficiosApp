@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Http, Headers } from "@angular/http";
 import { Storage } from "@ionic/storage";
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { HomePage } from '../pages/home/home';
 import { RegisterPage } from '../pages/register/register';
@@ -20,7 +21,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage:any = HomePage;
-  token
+  token;
+  user;
 
   pages: Array<{ title: string, component: any }>;
 
@@ -34,6 +36,7 @@ export class MyApp {
     public http: Http,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
+    public iab: InAppBrowser,
     public storage: Storage) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -51,7 +54,7 @@ export class MyApp {
       { title: 'Beneficios Guardados', component: SaveBenefitsPage },
     ];
 
-    this.storage.get('token').then( data => {
+    /*this.storage.get('token').then( data => {
       if(data != null)
       {
         this.token = 'Bearer ' + data;
@@ -64,10 +67,22 @@ export class MyApp {
       this.token = null;
     });
 
-    console.log(this.token);
+    this.storage.get('username').then( data => {
+      if(data != null)
+      {
+        this.user = data;
+      }
+      else if(data == null)
+      {
+        this.user = null;
+      }
+    }).catch(err => {
+      this.user = null;
+    });*/
 
-    events.subscribe('user:login', (token) => {
+    events.subscribe('user:login', (token, user) => {
       this.token = token;
+      this.user = user;
     });
   }
 
@@ -86,43 +101,11 @@ export class MyApp {
 
     this.storage.remove('token');
     this.storage.remove('profile');
+    this.storage.remove('username')
     this.token = null;
+    this.user = null;
     this.nav.setRoot(HomePage);
     loading.dismiss();
-
-    /*let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('X-Requested-With', 'XMLHttpRequest');
-    headers.append('Authorization', this.token);
-
-    this.http.post(this.api + 'logout', {}, { headers: headers })
-      .map(res => res.json())
-      .subscribe(
-        data => { this.nav.setRoot(HomePage); this.storage.remove('token'); this.storage.remove('profile'); loading.dismiss(); },
-        err => { 
-          if (err.status == 401){
-            this.storage.remove('token');
-            this.storage.remove('profile');
-            this.nav.setRoot(HomePage);
-          } else if (err.status == 400) {
-            this.toast('Su usuario ha sido deshabilitado');
-            this.storage.remove('token');
-            this.storage.remove('profile');
-            this.nav.setRoot(HomePage);
-          } else if (err.status == 500) {
-            this.toast('Ocurrio un error');
-            this.storage.remove('token');
-            this.storage.remove('profile');
-            this.nav.setRoot(HomePage);
-          } else {
-            this.toast('Ocurrio un error');
-            this.storage.remove('token');
-            this.storage.remove('profile');
-            this.nav.setRoot(HomePage);
-          }
-          loading.dismiss();
-        },
-      );*/
   }
 
   hideSplashScreen() {
@@ -143,27 +126,10 @@ export class MyApp {
     toast.present();
   }
 
-  // navigateToBuscar(){
-  //   this.nav.push('HomePage', {param1: '1'});
-  // }
-  // navigateToBeneficios(){
-  //   this.nav.push('HomePage', {param1: '2'});
-  // }
-  // navigateToNovedades(){
-  //   this.nav.push('HomePage', {param1: '3'});
-  // }
-
-
-  // onSegmentChange(event)
-  // {
-  //     if(event)
-  //     {
-  //         this.nav.push('HomePage', {param1: '1'});
-  //         console.log(event);
-          
-  //     }
-  //     this.initMap();
-  // }
+  openWeb() {
+    const browser = this.iab.create('https://clubbeneficiosuno.goodcomex.com/beneficios/public');
+    browser.show();
+  }
     
 }
 

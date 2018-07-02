@@ -5,7 +5,8 @@
         <ion-icon name="arrow-round-back"></ion-icon>
       </button>
       <ion-item no-lines>
-        <h2 text-center>Bienvenido Usuario</h2>
+        <h2 text-center *ngIf="!user">Bienvenido Usuario</h2>
+        <h2 text-center *ngIf="user">Bienvenido {{ user }}</h2>
         <ion-avatar item-right>
           <ion-icon name="contact" style="font-size:40px;"></ion-icon>
         </ion-avatar>
@@ -15,7 +16,7 @@
 
   <ion-content>
     <ion-grid>
-       <ion-row *ngIf="!token">
+       <ion-row *ngIf="!user">
         <ion-col>
           <button menuClose ion-button block color="light" (tap)="openPage(pages[0])">
             <div>
@@ -33,7 +34,7 @@
           </button>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="token">
+      <ion-row *ngIf="user">
         <ion-col>
           <button menuClose ion-button block color="light" (tap)="openPage(pages[2])">
             <div>
@@ -87,7 +88,7 @@
           </button>
         </ion-col> -->
         <ion-col width-25>
-          <button menuClose ion-button block color="light" (click)="openPage(pages[1])">
+          <button menuClose ion-button block color="light" (click)="openWeb()">
             <div>
             <ion-icon name="cloud" color="bluep"></ion-icon>
             <label >Web Site</label>

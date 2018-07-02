@@ -5,6 +5,7 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { IonicStorageModule } from '@ionic/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { OneSignal } from '@ionic-native/onesignal';
 import { Facebook } from '@ionic-native/facebook';
@@ -73,6 +74,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     Facebook,
     GooglePlus,
     FileTransfer,
+    InAppBrowser,
     Camera,
     Geolocation,
     

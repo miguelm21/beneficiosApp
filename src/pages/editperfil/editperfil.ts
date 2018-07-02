@@ -57,6 +57,7 @@ export class EditperfilPage {
   UpdateProfile() {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
+      dismissOnPageChange: false,
       content: '<img src="assets/spinner3.gif"/>'
     });
     loading.present();

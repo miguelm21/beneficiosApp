@@ -65,7 +65,8 @@ export class SaveBenefitsPage {
   getBenefits(token) {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner3.gif"/>'
+      content: '<img src="../../assets/spinner3.gif"/>',
+      dismissOnPageChange: false
     });
 
     loading.present();
