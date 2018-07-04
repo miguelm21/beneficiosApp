@@ -101,7 +101,7 @@ export class MyApp {
 
     this.storage.remove('token');
     this.storage.remove('profile');
-    this.storage.remove('username')
+    this.storage.remove('username');
     this.token = null;
     this.user = null;
     this.nav.setRoot(HomePage);

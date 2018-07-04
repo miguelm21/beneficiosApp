@@ -43,9 +43,62 @@ export class PasswordPage {
   }
 
   ionViewWillEnter() {
-    this.token = 'Beaer' + this.navParams.get('token');
-    this.profile = this.navParams.get('profile');
+    this.storage.get('token').then( data => {
+      if(data != null) {
+        if(data == 'token_expired') {
+          console.log('a');
+          this.navCtrl.setRoot(LoginPage);
+        }
+        else if(data == undefined) {
+          console.log('b');
+          this.navCtrl.setRoot(LoginPage);
+        }
+        else if(data == 'Unauthenticated.') {
+          console.log('c');
+          this.navCtrl.setRoot(LoginPage);
+        }
+        else {
+          console.log('d');
+          this.token = 'Bearer ' + data;
+          var token = 'Bearer ' + data;
+          this.getProfile(token);
+        }
+      }
+    });
     console.log(this.profile);
+  }
+
+  getProfile(token) {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: '<img src="assets/spinner3.gif"/>',
+      dismissOnPageChange: false
+    });
+
+    loading.present();
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-Requested-With', 'XMLHttpRequest');
+    headers.append('Authorization', token);
+
+    this.http.post(this.api + 'me', {}, { headers: headers })
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          this.profile = data;
+          loading.dismiss();
+        },
+        err => {
+          loading.dismiss();
+          if (err.status == 401){
+            this.toast('No se encontraron datos');
+          } else if (err.status == 500) {
+            this.toast('Ocurrio un error');
+          } else {
+            this.toast('Ocurrio un error');
+          }   
+        },
+      );
   }
 
   UpdatePassword() {
@@ -100,6 +153,7 @@ export class PasswordPage {
           if (err.status == 401){
             this.storage.remove('token');
             this.storage.remove('profile');
+            this.storage.remove('username');
             this.navCtrl.push(LoginPage);
           } else if (err.status == 400) {
             this.toast('Su usuario ha sido deshabilitado');

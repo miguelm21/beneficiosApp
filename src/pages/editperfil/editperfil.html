@@ -8,12 +8,10 @@
 	<ion-row class="header-row">
 		<ion-col col-8 col-lg-9 col-md-9 class="first-col">
 			<ion-row>
-				<ion-col col-1 col-lg-3 col-md-3>
-					<button ion-button clear  color="light" (tap)="MoveToBack()">
-						<ion-icon name="arrow-back"></ion-icon>
-					</button>
-				</ion-col>
-				<ion-col col-11 col-lg-9 col-md-9>
+				<ion-col col-2>
+		      		<button class="back-button disable-hover bar-button bar-button-md back-button-md bar-button-default bar-button-default-md show-back-button" ion-button="bar-button" ng-reflect-klass="back-button" ng-reflect-ng-class="back-button-md" (tap)="home()"><span class="button-inner"><ion-icon class="back-button-icon icon icon-md back-button-icon-md ion-md-arrow-back" role="img" ng-reflect-klass="back-button-icon" ng-reflect-ng-class="back-button-icon-md" aria-label="arrow back" ng-reflect-name="md-arrow-back"></ion-icon><span class="back-button-text back-button-text-md" ng-reflect-class="back-button-text" ng-reflect-ng-class="back-button-text-md"></span></span><div class="button-effect"></div></button>
+		      	</ion-col>
+				<ion-col col-10 col-lg-10 col-md-90>
 					<ion-searchbar class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
 					</ion-searchbar>
 				</ion-col>

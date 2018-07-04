@@ -48,7 +48,7 @@ export class LoginPage {
 
   ionViewDidLoad() {
     this.menuCtrl.close();
-    this.authenticate();
+    /*this.authenticate();*/
   }
 
   keytab(event) {

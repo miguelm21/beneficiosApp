@@ -4,6 +4,9 @@ import { Http, Headers } from '@angular/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer';
 
+import { PerfilPage } from '../perfil/perfil';
+
+
 /**
  * Generated class for the EditperfilPage page.
  *
@@ -119,6 +122,10 @@ export class EditperfilPage {
     });
 
     toast.present();
+  }
+
+  home(){
+    this.navCtrl.push(PerfilPage);
   }
 
 }
