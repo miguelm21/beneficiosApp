@@ -109,7 +109,7 @@ Ionic pages and navigation.
             <img class="img-card" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
           </ion-thumbnail>
         </ion-col>
-        <ion-col col-5 col-md-7>
+        <ion-col col-5 col-md-7 style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
           <h2 class="title-offert">{{ b.name }}</h2>
           <p class="text-offert">{{ b.description }}</p>
         </ion-col>

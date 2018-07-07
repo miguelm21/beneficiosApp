@@ -249,11 +249,11 @@ declare var map;
             },
             err => {
               if (err.status == 401){
-                this.toast('No se encontraron datos');
+                /*this.toast('No se encontraron datos');*/
               } else if (err.status == 500) {
-                this.toast('Ocurrio un error');
+                /*this.toast('Ocurrio un error');*/
               } else {
-                this.toast('Ocurrio un error');
+                /*this.toast('Ocurrio un error');*/
               }
             },
           );
