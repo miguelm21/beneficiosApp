@@ -53,7 +53,6 @@ Ionic pages and navigation.
 
       <ion-list class="accordion-list">
         <ion-list-header *ngFor="let item of information; let i = index" no-lines no-padding>
-          <!-- Toggle Button -->
           <button ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
            <ion-icon item-right name="arrow-down" *ngIf="!item.open"></ion-icon>
            <ion-icon item-right name="arrow-up" *ngIf="item.open"></ion-icon>
@@ -62,10 +61,8 @@ Ionic pages and navigation.
          </button>
 
          <ion-list *ngIf="item.children && item.open" no-lines>
-          <!-- Button Acordion -->
           <ion-list-header *ngFor="let child of item.children; let j = index" no-padding>
-            <!-- Contenido Acordion -->
-            <ion-item *ngIf="!child.children" ion-item detail-none class="child-item" text-wrap>
+            <ion-item *ngIf="!child.children" ion-item detail-none class="child-item" text-wrap no-padding>
               <ion-row>
                 <ion-col col-8>
                   <ion-item>
@@ -78,8 +75,8 @@ Ionic pages and navigation.
               </ion-row>
               <h2 text-center>{{ child.name }}</h2>
               <ion-row class="row-checkboxs">
-                <ion-col col-6 *ngFor="let c of categories" text-center>
-                  <ion-item text-center>
+                <ion-col col-4 *ngFor="let c of categories" text-center>
+                  <ion-item text-center no-padding>
                     <ion-checkbox class="checkbox-edit" id="box-{{ c.id }}" (ionChange)="filterCategoryMap(c.id, $event)"></ion-checkbox>
                   </ion-item>
                   <label for="box-{{ c.id }}" class="label-checkboxs">{{ c.name }}</label>
@@ -90,6 +87,8 @@ Ionic pages and navigation.
         </ion-list>
       </ion-list-header>
     </ion-list>
+
+
 
   <div class="contenedor-map">
     <div text-center #map id="map">
@@ -109,7 +108,7 @@ Ionic pages and navigation.
             <img class="img-card" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
           </ion-thumbnail>
         </ion-col>
-        <ion-col col-5 col-md-7 style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        <ion-col col-5 col-md-7 style="overflow: hidden; text-overflow: ellipsis;" no-padding>
           <h2 class="title-offert">{{ b.name }}</h2>
           <p class="text-offert">{{ b.description }}</p>
         </ion-col>
