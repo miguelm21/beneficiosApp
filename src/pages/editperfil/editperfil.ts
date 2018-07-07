@@ -31,7 +31,8 @@ export class EditperfilPage {
   City;
   Domicile;
   image;
-  imgPreview
+  imgPreview;
+  img;
 
   api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
 
@@ -55,6 +56,7 @@ export class EditperfilPage {
     this.Province = this.profile.province;
     this.City = this.profile.city;
     this.Domicile = this.profile.domicile;
+    this.img = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/images/upload/' + this.profile.email + '/' + this.profile.avatar
   }
 
   UpdateProfile() {

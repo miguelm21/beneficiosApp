@@ -112,7 +112,7 @@ export class RegisterPage {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: '<img src="assets/spinner3.gif"/>',
-      dismissOnPageChange: false
+      dismissOnPageChange: true
     });
     loading.present();
     this.fb.login(['email', 'public_profile'])
@@ -183,7 +183,7 @@ export class RegisterPage {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: '<img src="assets/spinner3.gif"/>',
-      dismissOnPageChange: false
+      dismissOnPageChange: true
     });
     loading.present();
     this.googlePlus.login({})

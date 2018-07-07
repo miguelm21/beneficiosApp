@@ -15,7 +15,7 @@
         <ion-col col-10 col-md-9 style="min-height: 50px;">
           <!-- <ion-searchbar class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true" (ionChange)="getBenefits()">
           </ion-searchbar> -->
-          <ion-searchbar (ionInput)="getItems($event)" autocomplete="off" autocorrect="off"></ion-searchbar>
+          <ion-searchbar (ionInput)="getItems($event)" autocomplete="off" autocorrect="off" placeholder="Buscar"></ion-searchbar>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -42,8 +42,8 @@
 				</ion-row>
 				<ion-card class="Border-card" *ngFor="let b of benefs">
 					<ion-item class="item-offert">
-						<button ion-fab icon-only *ngIf="b.bookmark == 0" (tap)="PostBenefit(b.id)"><ion-icon name="bookmark" style="color: #fff;"></ion-icon></button>
-						<ion-icon name="bookmark" style="font-size: 30px" *ngIf="b.bookmark == 1" (tap)="UnpostBenefit(b.id)"></ion-icon>
+						<button ion-fab icon-only *ngIf="this.token && b.bookmark == 0" (tap)="PostBenefit(b.id)"><ion-icon name="bookmark" style="color: #fff;"></ion-icon></button>
+						<ion-icon name="bookmark" style="font-size: 30px" *ngIf="this.token && b.bookmark == 1" (tap)="UnpostBenefit(b.id)"></ion-icon>
 						<ion-thumbnail item-start>
 							<img style="width: 50px;border-radius:50%;" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
 						</ion-thumbnail>

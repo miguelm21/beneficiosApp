@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import { ImageViewerController } from 'ionic-img-viewer';
+import { Storage } from "@ionic/storage";
 
 import { BeneficioPage } from '../beneficio/beneficio';
 /**
@@ -39,7 +40,8 @@ export class CategoryPage {
     public navParams: NavParams,
     private http: Http,
     public toastCtrl: ToastController,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public storage: Storage) {
   }
 
   ionViewDidLoad() {
@@ -50,7 +52,19 @@ export class CategoryPage {
     var id = this.navParams.get('id');
     var token = this.navParams.get('token');
     this.id = this.navParams.get('id');
-    this.token = this.navParams.get('token');
+    this.storage.get('token').then( data => {
+      if(data != null) {
+        if(data == 'token_expired') {
+
+        }
+        else if(data == undefined) {
+
+        }
+        else {
+          this.token = data;
+        }
+      }
+    });
     this.getCategory(id, token);
     this.initializeItems();
   }

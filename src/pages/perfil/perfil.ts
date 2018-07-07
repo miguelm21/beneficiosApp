@@ -22,8 +22,9 @@ import { PasswordPage } from '../password/password';
 })
 export class PerfilPage {
   _imageViewerCtrl: ImageViewerController;
-  profile: Object[];
+  profile;
   token;
+  image;
 
   api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
 
@@ -87,6 +88,7 @@ export class PerfilPage {
       .subscribe(
         data => {
           this.profile = data;
+          this.image = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/images/upload/' + this.profile.email + '/' + this.profile.avatar
           loading.dismiss();
         },
         err => {

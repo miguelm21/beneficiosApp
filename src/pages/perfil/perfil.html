@@ -14,7 +14,7 @@
 					</button>
 				</ion-col>
 				<ion-col col-10>
-					<ion-searchbar class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
+					<ion-searchbar placeholder="Buscar" class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
 					</ion-searchbar>
 				</ion-col>
 			</ion-row>
@@ -33,7 +33,7 @@
 			<div class="container">
 				<h1 text-center style="font-family:Monserrat;color:white;">Perfil de Usuario</h1>
 				<img *ngIf="!profile?.avatar" class="pantalla-1" src="assets/imgs/userperfil.png" alt="Imagen Principal" #myImage (click)="presentImage(myImage)">
-				<img *ngIf="profile?.avatar" class="pantalla-1" src="profile?.avatar" alt="Imagen Principal" #myImage (click)="presentImage(myImage)">
+				<img *ngIf="profile?.avatar" class="pantalla-1" [src]="image" alt="Imagen Principal" #myImage (click)="presentImage(myImage)">
 			</div>
 		</ion-col>
 		<ion-col col-12 text-center style="margin-top:20%">

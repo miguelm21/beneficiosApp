@@ -12,7 +12,7 @@
 		      		<button class="back-button disable-hover bar-button bar-button-md back-button-md bar-button-default bar-button-default-md show-back-button" ion-button="bar-button" ng-reflect-klass="back-button" ng-reflect-ng-class="back-button-md" (tap)="home()"><span class="button-inner"><ion-icon class="back-button-icon icon icon-md back-button-icon-md ion-md-arrow-back" role="img" ng-reflect-klass="back-button-icon" ng-reflect-ng-class="back-button-icon-md" aria-label="arrow back" ng-reflect-name="md-arrow-back"></ion-icon><span class="back-button-text back-button-text-md" ng-reflect-class="back-button-text" ng-reflect-ng-class="back-button-text-md"></span></span><div class="button-effect"></div></button>
 		      	</ion-col>
 				<ion-col col-10 col-lg-10 col-md-90>
-					<ion-searchbar class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
+					<ion-searchbar placeholder="Buscar" class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
 					</ion-searchbar>
 				</ion-col>
 			</ion-row>
@@ -30,8 +30,9 @@
 		</ion-col>
 		<ion-col col-12 text-center class="contenedor-card-perfil">
 			<div class="container">
-				<h1 text-center class="font-perfil" style="font-family:Monserrat;color:white;">Editar Perfil de Usuario</h1>
-				<!-- <img class="pantalla-1" src="assets/imgs/userperfil.png" alt="Imagen Principal"> -->
+				<h1 text-center style="font-family:Monserrat;color:white;">Perfil de Usuario</h1>
+				<img *ngIf="!profile?.avatar" class="pantalla-1" src="assets/imgs/userperfil.png" alt="Imagen Principal" #myImage (click)="presentImage(myImage)">
+				<img *ngIf="profile?.avatar" class="pantalla-1" [src]="img" alt="Imagen Principal" #myImage (click)="presentImage(myImage)">
 			</div>
 		</ion-col>
 		<ion-col col-12 text-center style="margin-top:20%">
@@ -68,6 +69,9 @@
 		          <ion-icon name="photos"></ion-icon>
 		          Seleccionar Foto
 		        </button>
+		        <div class="preview" no-padding *ngIf="imgPreview">
+					<img class="Img-Preview" [src]="imgPreview">
+				</div>
 		    </ion-item>
 		</ion-col>
 		<ion-row text-center class="row-button-cambio" style="padding: 50px;">
