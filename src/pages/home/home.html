@@ -133,7 +133,7 @@ Ionic pages and navigation.
 </ion-list>
 
 <ion-list *ngSwitchCase="'2'" >
-  <!-- <ion-slides class="slider" autoplay="3000" loop="true" speed="2000">
+  <ion-slides class="slider" autoplay="3000" loop="true" speed="2000">
     <ion-slide class="container" >
       <img class="img-slider" src="assets/imgs/moda.jpg" alt="Imagen slider">
     </ion-slide>
@@ -152,7 +152,7 @@ Ionic pages and navigation.
     <ion-slide class="container">
       <img class="img-slider" src="assets/imgs/deco.jpg" alt="Imagen slider">
     </ion-slide>
-  </ion-slides> -->
+  </ion-slides>
   <ion-list class="list-category">
     <ion-list-header *ngFor="let c of categories" (tap)="category(c.id)">
       <button ion-fab class="icon-category" color="bluep" item-start><ion-icon name="{{ c.iconapp }}"></ion-icon>

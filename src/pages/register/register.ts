@@ -64,7 +64,7 @@ export class RegisterPage {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: '<img src="../../assets/spinner2.gif"/>',
-      dismissOnPageChange: false
+      dismissOnPageChange: true
     });
     loading.present();
     loading.dismiss();
