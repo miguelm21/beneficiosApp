@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 import { Http, Headers } from '@angular/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { DomSanitizer} from '@angular/platform-browser';
 
 import { PerfilPage } from '../perfil/perfil';
 
@@ -43,6 +44,7 @@ export class EditperfilPage {
     private http: Http,
     public transfer: FileTransfer,
     public camera: Camera,
+    public sanitizer: DomSanitizer,
     public loadingCtrl: LoadingController) {
   }
 
@@ -56,7 +58,7 @@ export class EditperfilPage {
     this.Province = this.profile.province;
     this.City = this.profile.city;
     this.Domicile = this.profile.domicile;
-    this.img = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/images/upload/' + this.profile.email + '/' + this.profile.avatar
+    this.image = this.sanitizer.bypassSecurityTrustUrl('data:image/svg+xml+png+jpeg;base64,' + this.profile.avatar);
   }
 
   UpdateProfile() {

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, MenuController, LoadingController,
 import { ImageViewerController } from 'ionic-img-viewer'
 import { Http, Headers } from '@angular/http';
 import { Storage } from "@ionic/storage";
+import { DomSanitizer} from '@angular/platform-browser';
 
 import { LoginPage } from '../login/login';
 import { EditperfilPage } from '../editperfil/editperfil';
@@ -35,6 +36,7 @@ export class PerfilPage {
     imageViewerCtrl: ImageViewerController,
     public storage: Storage,
     public toastCtrl: ToastController,
+    public sanitizer: DomSanitizer,
     private http: Http,
     public loadingCtrl: LoadingController) {
        this._imageViewerCtrl = imageViewerCtrl; 
@@ -88,7 +90,7 @@ export class PerfilPage {
       .subscribe(
         data => {
           this.profile = data;
-          this.image = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/images/upload/' + this.profile.email + '/' + this.profile.avatar
+          this.image = this.sanitizer.bypassSecurityTrustUrl('data:image/svg+xml+png+jpeg;base64,' + this.profile.avatar);
           loading.dismiss();
         },
         err => {
