@@ -132,11 +132,14 @@ Ionic pages and navigation.
 </ion-list>
 
 <ion-list *ngSwitchCase="'2'" >
-  <ion-slides class="slider" autoplay="3000" loop="true" speed="2000">
-    <ion-slide class="container" >
-      <img class="img-slider" src="assets/imgs/moda.jpg" alt="Imagen slider">
+  <ion-slides class="slider" autoplay="3000" loop="true" speed="2000" *ngIf="newsBenefs">
+    <ion-slide class="container" *ngFor="let n of newsBenefs">
+      <img class="img-slider" src="data:image/jpeg;base64,{{ n.image }}" alt="Imagen slider" (tap)="benefit(n.id, n.latitude, n.longitude)">
     </ion-slide>
-    <ion-slide class="container">
+     <!-- <ion-slide class="container" >
+      <img class="img-slider" src="assets/imgs/moda.jpg" alt="Imagen slider">
+    </ion-slide> -->
+    <!--<ion-slide class="container">
       <img class="img-slider" src="assets/imgs/cine-combo.jpg" alt="Imagen slider">
     </ion-slide>
     <ion-slide class="container">
@@ -150,8 +153,8 @@ Ionic pages and navigation.
     </ion-slide>
     <ion-slide class="container">
       <img class="img-slider" src="assets/imgs/deco.jpg" alt="Imagen slider">
-    </ion-slide>
-  </ion-slides>
+    </ion-slide>-->
+  </ion-slides> 
   <ion-list class="list-category">
     <ion-list-header *ngFor="let c of categories" (tap)="category(c.id)">
       <button ion-fab class="icon-category" color="bluep" item-start><ion-icon name="{{ c.iconapp }}"></ion-icon>

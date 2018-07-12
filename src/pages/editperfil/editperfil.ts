@@ -82,7 +82,7 @@ export class EditperfilPage {
         err => {
           loading.dismiss();
           if (err.status == 401){
-            this.toast('Credenciales Incorrectas');
+            this.toast('Datos incorrectos');
           } else if (err.status == 500) {
             this.toast('Ocurrio un error');
           } else {

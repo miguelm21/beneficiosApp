@@ -7,7 +7,9 @@ import { Http, Headers } from '@angular/http';
 import { Slides, LoadingController} from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 import { OneSignal, OSNotificationPayload } from '@ionic-native/onesignal';
-import 'rxjs/add/operator/map'
+import { DomSanitizer} from '@angular/platform-browser';
+import 'rxjs/add/operator/map';
+
 import { CategoryPage } from '../category/category';
 import { NoticiaPage } from '../noticia/noticia';
 import { BeneficioPage } from '../beneficio/beneficio';
@@ -50,11 +52,14 @@ declare var map;
      items2;
      showList = false;
 
+     interval;
+
      categories: Object[];
      benefs: Array<any>;
      benefits: Object[];
      news: Array<any>;
      news2: any[] = [];
+     newsBenefs: Object[];
 
     constructor(
         public navCtrl: NavController,
@@ -69,6 +74,7 @@ declare var map;
         private platform: Platform,
         private oneSignal: OneSignal,
         public geolocation: Geolocation,
+        public sanitizer: DomSanitizer,
         public storage: Storage) {
             this.locationAccuracy.canRequest().then((canRequest: boolean) => {
               if(canRequest) {
@@ -150,13 +156,17 @@ declare var map;
         this.initializeItems();
         /*this.SendMessage();*/
 
-        setInterval(() => { this.getLocation(); this.getMapData(); }, 15000);
+        this.interval = setInterval(() => { this.getLocation(); this.getMapData(); }, 15000);
 
     }
      
     ionViewDidLoad() {
         this.menuCtrl.close();
         
+     }
+
+     ionViewDidLeave() {
+         clearInterval(this.interval);
      }
 
      initializeItems() {
@@ -169,9 +179,7 @@ declare var map;
         .map(res => res.json())
           .subscribe(
             data => {
-                console.log(data);
                 this.items = data;
-                console.log(this.items);
             },
             err => {
                 this.toast('no se encontraron beneficios')
@@ -224,7 +232,19 @@ declare var map;
                 this.benefits = data.benefs;
                 this.news = data.news;
 
-                console.log(this.benefs)
+                /*var array = [];
+
+                var nb = data.newsBenefs;
+
+                data.newsBenefs.forEach(function(dat) {
+                    console.log(dat['image']);
+                    var img = this.sanitizer.bypassSecurityTrustUrl("data:Image/*;base64," + dat['image']);
+                    array.push({ id: dat['id'], image: img, latitude: dat['latitude'], longitude: dat['longitude'] });
+                });*/
+
+                this.newsBenefs = data.newsBenefs;
+
+                console.log(this.newsBenefs);
 
                 var n = [];
                 this.news.forEach((data) => {
@@ -557,11 +577,11 @@ declare var map;
             data => { console.log(data.response); },
             err => {
               if (err.status == 401){
-                this.toast('Error al enviar informacion');
+                /*this.toast('Error al enviar informacion');*/
               } else if (err.status == 500) {
-                this.toast('Ocurrio un error');
+                /*this.toast('Ocurrio un error');*/
               } else {
-                this.toast('Ocurrio un error');
+                /*this.toast('Ocurrio un error');*/
               }
             },
           );

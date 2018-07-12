@@ -29,6 +29,7 @@ export class CategoryPage {
   categories: Array<any>;
   benefits: Array<any>;
   benefs: Array<any>;
+  see;
 
   api = 'https://clubbeneficiosuno.goodcomex.com/beneficios/public/api/';
 
@@ -45,28 +46,30 @@ export class CategoryPage {
   }
 
   ionViewDidLoad() {
-
-  }
-
-  ionViewWillEnter() {
     var id = this.navParams.get('id');
     var token = this.navParams.get('token');
     this.id = this.navParams.get('id');
     this.storage.get('token').then( data => {
       if(data != null) {
         if(data == 'token_expired') {
-
+          this.see = 0;
         }
         else if(data == undefined) {
-
+          this.see = 0;
         }
         else {
           this.token = data;
+          this.see = 1;
         }
       }
     });
+    console.log(this.token);
     this.getCategory(id, token);
     this.initializeItems();
+  }
+
+  ionViewWillEnter() {
+    
   }
 
   initializeItems() {
@@ -147,7 +150,7 @@ export class CategoryPage {
         headers.append('Authorization', this.token);
 
         var credentials = JSON.stringify({ id: id });
-        this.http.post('http://127.0.0.1:8000/api/postbenefit/', credentials, { headers: headers })
+        this.http.post(this.api + 'postbenefit', credentials, { headers: headers })
           .map(res => res.json())
           .subscribe(
             data => { this.toast('Beneficio Guardado'); this.getCategory(this.id, this.token); },
@@ -169,7 +172,7 @@ export class CategoryPage {
         headers.append('X-Requested-With', 'XMLHttpRequest');
         headers.append('Authorization', this.token);
 
-        this.http.delete('http://127.0.0.1:8000/api/unpostbenefit/' + id, { headers: headers })
+        this.http.delete(this.api + 'unpostbenefit' + id, { headers: headers })
           .map(res => res.json())
           .subscribe(
             data => { this.toast('Beneficio Borrado'); this.getCategory(this.id, this.token); },
