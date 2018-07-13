@@ -53,7 +53,7 @@ declare var map;
      showList = false;
 
      interval;
-
+     intervalNotifications;
      categories: Object[];
      benefs: Array<any>;
      benefits: Object[];
@@ -160,6 +160,9 @@ declare var map;
           this.getLocation(); 
           this.getMapData();
         }, 15000);
+        this.intervalNotifications = setInterval(() => { 
+          this.sendNotification(); 
+        }, 120000);
 
     }
      
@@ -170,6 +173,7 @@ declare var map;
 
      ionViewDidLeave() {
          clearInterval(this.interval);
+         clearInterval(this.intervalNotifications)
      }
 
      initializeItems() {
@@ -305,8 +309,6 @@ declare var map;
             let longitude = position.coords.longitude;
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;    
-            this.sendNotification(this.latitude, this.longitude, this.onesignalId); 
-
            return position.coords;
         }).catch((error) => {
           console.log('Error getting location');
@@ -314,12 +316,12 @@ declare var map;
     }
 
 
-    sendNotification(latitude, longitude, id){
+    sendNotification(){
          let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('X-Requested-With', 'XMLHttpRequest');
         headers.append('Authorization', this.token);          
-        this.http.get(this.api + 'sendMessagePosition/'+ latitude +'/'+ longitude +'/' + id, { headers: headers })
+        this.http.get(this.api + 'sendMessagePosition/'+this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })
             .map(res => res.json())
             .subscribe(
                 data => { console.log(data) },
