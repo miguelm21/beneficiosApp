@@ -154,6 +154,7 @@ declare var map;
         this.SendData();
         // Reset items back to all of the 
         this.initializeItems();
+        this.sendNotification(); 
         /*this.SendMessage();*/
 
         this.interval = setInterval(() => { 
