@@ -156,7 +156,10 @@ declare var map;
         this.initializeItems();
         /*this.SendMessage();*/
 
-        this.interval = setInterval(() => { this.getLocation(); this.getMapData(); }, 15000);
+        this.interval = setInterval(() => { 
+          this.getLocation(); 
+          this.getMapData();
+        }, 15000);
 
     }
      
@@ -228,9 +231,27 @@ declare var map;
           .subscribe(
             data => {
                 this.categories = data.categories;
-                this.benefs = data.benefs;
-                this.benefits = data.benefs;
+                
                 this.news = data.news;
+
+                /*var benef = [];
+                benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)));*/
+
+                var ben = [];
+                /*var key = benef.shift();*/
+
+                data.benefs.forEach((data) => {
+                    var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+                    if(distance < 1)
+                    {
+                      ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+                    }
+                });
+
+                this.benefs = ben;
+                this.benefits = ben;
+
+                console.log(this.benefits);
 
                 /*var array = [];
 
@@ -243,8 +264,6 @@ declare var map;
                 });*/
 
                 this.newsBenefs = data.newsBenefs;
-
-                console.log(this.newsBenefs);
 
                 var n = [];
                 this.news.forEach((data) => {
@@ -363,7 +382,7 @@ declare var map;
             });
             markers.push(marker);
         });
-;
+
         this.setMapOnAll(map, markers);
     }
 
