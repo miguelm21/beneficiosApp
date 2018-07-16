@@ -297,22 +297,23 @@ border-radius:2px;
 .title-offert{
 	font-family: Sueca-bold;
 	overflow: hidden; 
-	-webkit-line-clamp: 1; 
-	line-clamp: 1; 
-	white-space: normal; 
+	// -webkit-line-clamp: 1; 
+	// line-clamp: 1; 
+	white-space: nowrap; 
 	text-overflow: ellipsis; 
-	display: -webkit-box; 
-	box-orient: vertical; 
-	-webkit-line-clamp: 1; 
-	-webkit-box-orient: vertical;
+	display: inline-block;
+	// display: -webkit-box; 
+	// box-orient: vertical; 
+	// -webkit-line-clamp: 1; 
+	// -webkit-box-orient: vertical;
 }
+
 .font-text{
 	font-size:18px;
 	font-family: Sueca-bold;
 }
 .tumb-img{
 	margin-top: 5px;
-	padding-left: 0px;
 }
 .second-col-card{
 	line-height: 0px;
@@ -337,14 +338,14 @@ ion-avatar, ion-thumbnail {
 	font-family: Sueca-bold;
 	margin-top: -10px;
 	overflow: hidden;
-	-webkit-line-clamp: 3;
+	// -webkit-line-clamp: 3;
 	line-clamp:3;
 	white-space: normal;
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	box-orient: vertical;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
+	// -webkit-line-clamp: 3;
+	// -webkit-box-orient: vertical;
 }
 .item-offert{
 	border-bottom: 1px outset;
@@ -1102,6 +1103,15 @@ hr {
 					}
 					.label-checkboxs{
 						font-size:12px;
+					}
+					.text-offert{
+						font-family: Sueca-bold;
+						margin-top: -8px;
+						max-height: 5.1rem;
+						word-break: break-all;
+						display: inline-block;
+						text-overflow: ellipsis;
+						overflow: hidden; 
 					}
 					.searchbar-ios{
 						// margin-top:6px;

@@ -103,16 +103,16 @@ Ionic pages and navigation.
           <button ion-fab icon-only color="light" *ngIf="b.bookmark == 1" (tap)="UnpostBenefit(b.id)"><ion-icon name="bookmark" style="font-size: 30px; color=#000"></ion-icon></button>
           <button ion-fab icon-only *ngIf="b.bookmark == 0" (tap)="PostBenefit(b.id)"><ion-icon name="bookmark" style="font-size: 30px; color:#fff;"></ion-icon></button>
         </ion-col>
-        <ion-col col-2 col-md-2>
+        <ion-col col-3 col-md-2>
           <ion-thumbnail class="tumb-img" item-start>
             <img class="img-card" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
           </ion-thumbnail>
         </ion-col>
-        <ion-col col-6 col-md-7 style="padding-left:7px;overflow: hidden; text-overflow: ellipsis;" no-padding>
+        <ion-col col-6 col-md-7 style="overflow: hidden; text-overflow: ellipsis;" no-padding>
           <h2 class="title-offert">{{ b.name }}</h2>
           <p class="text-offert">{{ b.description }}</p>
         </ion-col>
-        <ion-col col-3 col-md-2 class="second-col-card" (tap)="benefit(b.id)">
+        <ion-col col-2 col-md-2 class="second-col-card" (tap)="benefit(b.id)">
           <div class="card-text">
             <p class="font-text">Ver</p>
             <p class="font-text">Más</p>
