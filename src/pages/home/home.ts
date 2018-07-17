@@ -8,6 +8,7 @@ import { Slides, LoadingController} from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 import { OneSignal, OSNotificationPayload } from '@ionic-native/onesignal';
 import { DomSanitizer} from '@angular/platform-browser';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import 'rxjs/add/operator/map';
 
 import { CategoryPage } from '../category/category';
@@ -75,6 +76,7 @@ declare var map;
         private oneSignal: OneSignal,
         public geolocation: Geolocation,
         public sanitizer: DomSanitizer,
+        private socialSharing: SocialSharing,
         public storage: Storage) {
             this.locationAccuracy.canRequest().then((canRequest: boolean) => {
               if(canRequest) {
@@ -239,8 +241,7 @@ declare var map;
                 
                 this.news = data.news;
 
-                /*var benef = [];
-                benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)));*/
+                this.benefs = data.benefs;
 
                 var ben = [];
                 /*var key = benef.shift();*/
@@ -252,27 +253,16 @@ declare var map;
                       ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
                     }
                 });
-
-                this.benefs = ben;
                 this.benefits = ben;
-
-                console.log(this.benefits);
-
-                /*var array = [];
-
-                var nb = data.newsBenefs;
-
-                data.newsBenefs.forEach(function(dat) {
-                    console.log(dat['image']);
-                    var img = this.sanitizer.bypassSecurityTrustUrl("data:Image/*;base64," + dat['image']);
-                    array.push({ id: dat['id'], image: img, latitude: dat['latitude'], longitude: dat['longitude'] });
-                });*/
 
                 this.newsBenefs = data.newsBenefs;
 
                 var n = [];
-                this.news.forEach((data) => {
-                    var monthNames = [
+                console.log(this.news.length);
+                for(var i = 0; i < this.news.length; i++)
+                {
+                  var data = this.news[i];
+                  var monthNames = [
                         "Ene", "Feb", "Mar",
                         "Abr", "May", "Jun", "Jul",
                         "Ago", "Sep", "Oct",
@@ -288,8 +278,13 @@ declare var map;
                     var date2 = day + ' ' + monthNames[monthIndex];
 
                     this.news2.push({ id: data.id, title: data.title, text: data.text, image: data.image, mime: data.mime, size: data.size, user: data.user, day: day, month: monthNames[monthIndex] });
-                    this.initMap(this.benefs,this.latitude, this.longitude);
+                }
+
+                this.news.forEach((data) => {
+                    
                 });
+                this.initMap(this.benefs,this.latitude, this.longitude);
+                /*console.log(this.news2);*/
             },
             err => {
               if (err.status == 401){
@@ -359,7 +354,19 @@ declare var map;
             this.show = 1;
         }
 
-        benefits.forEach(data => {
+        var ben = [];
+        /*var key = benef.shift();*/
+
+        benefits.forEach((data) => {
+            var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+            if(distance < 1)
+            {
+              ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+            }
+        });
+
+
+        ben.forEach(data => {
             var contentString = 
             '<div class="container">' +
                 '<img class="card-img-top" height="30px" src="data:image/png;base64,' + data.image +'" alt="map-image' + data.id + '">' +
@@ -689,4 +696,16 @@ declare var map;
       });
       this.oneSignal.endInit();
     }
+
+  facebookShare(title){
+    this.socialSharing.shareViaFacebook(title, null, 'https://clubbeneficiosuno.goodcomex.com/beneficios/public');
+  }
+
+  twitterShare(title){
+    this.socialSharing.shareViaTwitter(title, null, 'https://clubbeneficiosuno.goodcomex.com/beneficios/public');
+  }
+
+  instagramShare(title, image){
+    this.socialSharing.shareViaInstagram(title, image);
+  }
 }

@@ -92,6 +92,10 @@ export class MyApp {
     this.nav.push(page.component);
   }
 
+  saveBenefits() {
+    this.nav.push(SaveBenefitsPage);
+  }
+
   logout() {
     var loading = this.loadingCtrl.create({
       spinner: 'hide',

@@ -49,7 +49,7 @@ export class CategoryPage {
     var id = this.navParams.get('id');
     var token = this.navParams.get('token');
     this.id = this.navParams.get('id');
-    this.storage.get('token').then( data => {
+    /*this.storage.get('token').then( data => {
       if(data != null) {
         if(data == 'token_expired') {
           this.see = 0;
@@ -62,8 +62,9 @@ export class CategoryPage {
           this.see = 1;
         }
       }
-    });
-    console.log(this.token);
+    });*/
+    this.token = token;
+    console.log(token);
     this.getCategory(id, token);
     this.initializeItems();
   }
@@ -126,6 +127,7 @@ export class CategoryPage {
           this.category = data.category;
           this.categories = data.categories;
           this.benefits = data.benefits;
+          console.log(data.benefits);
           this.section = id;
           this.filterBenefits(id);
           loading.dismiss();
