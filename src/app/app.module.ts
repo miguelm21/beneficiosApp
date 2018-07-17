@@ -11,6 +11,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Camera } from '@ionic-native/camera';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 // import { ExpandableHeader } from '../components/expandable-header/expandable-header';
 import { GoogleMaps } from '@ionic-native/google-maps';
@@ -76,6 +77,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     FileTransfer,
     InAppBrowser,
     Camera,
+    SocialSharing,
     Geolocation,
     
     {provide: ErrorHandler, useClass: IonicErrorHandler},

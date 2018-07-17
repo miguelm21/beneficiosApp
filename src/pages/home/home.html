@@ -196,23 +196,23 @@ Ionic pages and navigation.
       </div>
 
       <ion-row class="social-row-style">
-        <ion-col col-3 text-center>
+        <!-- <ion-col col-3 text-center>
           <button class="social-button"  ion-fab color="googleplus-logo">
             <ion-icon class="social-logo" name="logo-googleplus"></ion-icon>
           </button>
-        </ion-col>
+        </ion-col> -->
         <ion-col col-3 text-center>
-          <button class="social-button"  ion-fab  item-right color="facebook-logo">
+          <button (tap)="facebookShare(n.title)" class="social-button"  ion-fab  item-right color="facebook-logo">
             <ion-icon class="social-logo" name="logo-facebook" style=""></ion-icon>
           </button>
         </ion-col>
         <ion-col col-3 text-center>
-          <button class="social-button"  ion-fab  item-right color="instagram-logo">
+          <button (tap)="instagramShare(n.title, 'data:image/png;base64,' + n.image)" class="social-button"  ion-fab  item-right color="instagram-logo">
             <ion-icon class="social-logo" name="logo-instagram"></ion-icon>
           </button>
         </ion-col>
         <ion-col col-3 text-center>
-          <button class="social-button"  ion-fab item-right color="twitter-logo" >
+          <button (tap)="twitterShare(n.title)" class="social-button"  ion-fab item-right color="twitter-logo" >
             <ion-icon class="social-logo" name="logo-twitter"></ion-icon>
           </button>
         </ion-col>
