@@ -43,7 +43,7 @@ export class OpcionesPage {
   
 
 
-  change(){
+  change(){                                                                                                                                                                                                                                                                                                                                                              
     
      this.http.get(this.api+"changePermissions/"+this.onesignalId+"/true/"+ (this.estadoPositivo ? "1" : "0")).map(res => res.json())
       .subscribe(data => {});                                                                                                                                                                                                                                                       
