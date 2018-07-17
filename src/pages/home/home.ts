@@ -114,6 +114,7 @@ declare var map;
                 this.oneSignal.getIds().then((ids)=>{
                    
                     this.onesignalId = ids.userId;
+                    this.sendNotification(); 
                 })
               });
             
@@ -316,7 +317,8 @@ declare var map;
          let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('X-Requested-With', 'XMLHttpRequest');
-        headers.append('Authorization', this.token);          
+        headers.append('Authorization', this.token);  
+        alert(this.api + 'sendMessagePosition/'+this.latitude +'/'+ this.longitude +'/' + this.onesignalId)        
         this.http.get(this.api + 'sendMessagePosition/'+this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })
             .map(res => res.json())
             .subscribe(
