@@ -6,20 +6,17 @@
 -->
 <ion-header class="Bg-header">
 	<ion-row class="header-row">
-		<ion-col col-8 class="first-col">
+		<ion-col col-8 col-md-10 class="first-col">
 			<ion-row>
 				<ion-col col-2>
-					<button ion-button clear color="light" (tap)="home()">
-						<ion-icon style="color:white" name="arrow-back"></ion-icon>
-					</button>
+					<button class="back-button disable-hover bar-button bar-button-md back-button-md bar-button-default bar-button-default-md show-back-button" ion-button="bar-button" ng-reflect-klass="back-button" ng-reflect-ng-class="back-button-md" (tap)="home()"><span class="button-inner"><ion-icon class="back-button-icon icon icon-md back-button-icon-md ion-md-arrow-back" role="img" ng-reflect-klass="back-button-icon" ng-reflect-ng-class="back-button-icon-md" aria-label="arrow back" ng-reflect-name="md-arrow-back"></ion-icon><span class="back-button-text back-button-text-md" ng-reflect-class="back-button-text" ng-reflect-ng-class="back-button-text-md"></span></span><div class="button-effect"></div></button>
 				</ion-col>
-				<ion-col col-10>
-					<ion-searchbar class="searchbar-input" style="background-color:transparent;" [(ngModel)]="myInput" [showCancelButton]="false" [animated]="true" [cancelButtonText]="cancelButtonText" [spellcheck]="true">
-					</ion-searchbar>
+				<ion-col col-10 col-md-9 style="min-height: 50px;padding-left:0px;pad">
+					<ion-searchbar (ionInput)="getItems($event)" autocomplete="off" autocorrect="off" placeholder="Buscar"></ion-searchbar>
 				</ion-col>
 			</ion-row>
 		</ion-col>
-		<ion-col col-4 class="arrow">
+		<ion-col col-4  col-md-2 class="arrow">
 			<img class="club-logo" src="assets/imgs/logo-club.png">
 		</ion-col>
 	</ion-row>
@@ -28,15 +25,15 @@
 <ion-content #mycontent>
 	<ion-list>
 		<ion-card class="Border-card" *ngFor="let b of benefits">
-			<ion-item class="item-offert">
+			<ion-item class="item-offert" style="border-bottom:0px;">
 				<ion-thumbnail item-start>
 					<img style="width: 50px;border-radius:50%;" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
 				</ion-thumbnail>
-				<ion-card-content>
+				<ion-card-content no-padding style="overflow: hidden; text-overflow: ellipsis;">
 					<h2 class="title-offert">{{ b.name }}</h2>
 					<p class="text-offert">{{ b.description }}</p>
-					<button ion-button class="button-offert" color="bluep" item-end (tap)="benefit(b.id)">Ver Más</button>
 				</ion-card-content>
+					<button ion-button style="height: 1.8em;" class="button-offert" color="bluep" item-end (tap)="benefit(b.id)">Ver Más</button>
 			</ion-item>
 		</ion-card>
 	</ion-list>
