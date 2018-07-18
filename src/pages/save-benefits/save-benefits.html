@@ -30,7 +30,7 @@
 					<img style="width: 50px;border-radius:50%;" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
 				</ion-thumbnail>
 				<ion-card-content no-padding style="overflow: hidden; text-overflow: ellipsis;">
-					<h2 class="title-offert">{{ b.name }}</h2>
+					<h2 class="title-offert" style="text-overflow: inherit;overflow: inherit;">{{ b.name }}</h2>
 					<p class="text-offert">{{ b.description }}</p>
 				</ion-card-content>
 					<button ion-button style="height: 1.8em;" class="button-offert" color="bluep" item-end (tap)="benefit(b.id)">Ver Más</button>
