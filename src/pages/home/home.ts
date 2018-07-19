@@ -257,9 +257,9 @@ declare var map;
                 this.benefits = ben;
 
                 this.newsBenefs = data.newsBenefs;
-
-                var n = [];
                 console.log(this.news.length);
+                var n = [];
+                this.news2 = [];
                 for(var i = 0; i < this.news.length; i++)
                 {
                   var data = this.news[i];
@@ -281,9 +281,8 @@ declare var map;
                     this.news2.push({ id: data.id, title: data.title, text: data.text, image: data.image, mime: data.mime, size: data.size, user: data.user, day: day, month: monthNames[monthIndex] });
                 }
 
-                this.news.forEach((data) => {
-                    
-                });
+                console.log(this.news2.length);
+
                 this.initMap(this.benefs,this.latitude, this.longitude);
                 /*console.log(this.news2);*/
             },
@@ -318,7 +317,7 @@ declare var map;
         headers.append('Content-Type', 'application/json');
         headers.append('X-Requested-With', 'XMLHttpRequest');
         headers.append('Authorization', this.token);  
-        alert(this.api + 'sendMessagePosition/'+this.latitude +'/'+ this.longitude +'/' + this.onesignalId)        
+        /*alert(this.api + 'sendMessagePosition/'+this.latitude +'/'+ this.longitude +'/' + this.onesignalId)        */
         this.http.get(this.api + 'sendMessagePosition/'+this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })
             .map(res => res.json())
             .subscribe(
@@ -399,6 +398,7 @@ declare var map;
     }
 
     filterCategoryMap(id, e) {
+        clearInterval(this.interval);
         var benef = [];
         if(e.checked)
         {
@@ -451,6 +451,7 @@ declare var map;
     }
 
     filterKmMap(latitude, longitude) {
+        clearInterval(this.interval);
         if(typeof this.Checkbox !== 'undefined' && this.Checkbox.length > 0)
         {
             var benef = [];

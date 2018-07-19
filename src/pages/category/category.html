@@ -42,10 +42,10 @@
 				</ion-row>
 				<ion-card class="Border-card" *ngFor="let b of benefits">
 					<ion-item class="item-offert">
-						<button ion-fab icon-only *ngIf="token && b.bookmark == 0" (tap)="PostBenefit(b.id)">
+						<button ion-fab icon-only *ngIf="see == 1 && b.bookmark == 0" (tap)="PostBenefit(b.id)">
 							<ion-icon name="bookmark" style="color: #fff;"></ion-icon>
 						</button>
-						<ion-icon name="bookmark" style="font-size: 30px" *ngIf="token && b.bookmark == 1" (tap)="UnpostBenefit(b.id)"></ion-icon>
+						<ion-icon name="bookmark" style="font-size: 30px" *ngIf="see == 1 && b.bookmark == 1" (tap)="UnpostBenefit(b.id)"></ion-icon>
 						<ion-thumbnail item-start>
 							<img style="width: 50px;border-radius:50%;" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
 						</ion-thumbnail>

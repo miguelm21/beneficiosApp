@@ -64,6 +64,14 @@ export class CategoryPage {
       }
     });*/
     this.token = token;
+    if(token == 'Bearer undefined' || token == null || token == 'null' || token == undefined)
+    {
+      this.see = 0;
+    }
+    else
+    {
+      this.see = 1;
+    }
     console.log(token);
     this.getCategory(id, token);
     this.initializeItems();
