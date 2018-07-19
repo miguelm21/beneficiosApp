@@ -27,7 +27,7 @@
 
 <ion-content padding>
 	<ion-list *ngIf="showList" style="min-height: 50px">
-    <ion-item *ngFor="let item of items">
+    <ion-item *ngFor="let item of items" no-lines>
       <button ion-button (tap)="benefit(item.id)">{{ item.name }}</button>
     </ion-item>
   </ion-list>
@@ -39,7 +39,7 @@
 					<h3 class="title-offer" text-center>{{ benefit?.name }}</h3>
 					<img class="img-beneficio" [src]="benefit?.image" #myImage (click)="presentImage(myImage)">
           <p class="text-offert" text-justify>{{ benefit?.description }}</p>
-          <p class="text-offert" text-justify>{{ benefit?.percent }}% de Descuento</p>
+          <p class="text-offert" style="font-weight: 700;" text-center>{{ benefit?.percent }}% de Descuento</p>
 				</ion-thumbnail>
 			</ion-col>
 		</ion-row>

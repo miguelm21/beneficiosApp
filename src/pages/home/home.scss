@@ -344,11 +344,12 @@ ion-avatar, ion-thumbnail {
 .text-offert{
 	font-family: Sueca-bold;
 	margin-top: -8px;
-	max-height: 4rem;
+	white-space: nowrap;
 	word-break: break-all;
 	display: inline-block;
 	text-overflow: inherit;
 	overflow: inherit;
+	color: #4c4c4c;
 }
 .item-offert{
 	border-bottom: 1px outset;
@@ -1110,7 +1111,6 @@ hr {
 					.text-offert{
 						font-family: Sueca-bold;
 						margin-top: -8px;
-						max-height: 4rem;
 						word-break: break-all;
 						display: inline-block;
 						text-overflow: ellipsis;

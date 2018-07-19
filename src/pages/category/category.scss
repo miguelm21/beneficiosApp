@@ -10,8 +10,14 @@ page-category {
 		background: #fff !important;
 		border-radius: 28px;
 	}
-	.searchbar-ios{
-		width: 100%;
+	.searchbar-ios {
+		width:100%;
+		padding: 0px;
+		min-height: 44px;
+		border-top: 0.55px solid transparent;
+		border-bottom: 0.55px solid rgba(0, 0, 0, 0.05);
+		background: rgba(0, 0, 0, 0);
+		margin-left: 20px;
 	}
 	.toolbar-md {
 		padding: 0px;
@@ -128,7 +134,7 @@ page-category {
 	.button-offert{
 		color:white; 
 		float: right;
-		margin-top: -40px !important;
+		// margin-top: -40px !important;
 	}
 	// Medias Querys
 @media only screen and (min-width: 1201px) and (max-width: 1400px) {
@@ -568,7 +574,7 @@ page-category {
 		margin-top: 11px;
 	}
 	.searchbar-ios{
-		margin-top:6px;
+		margin-top:0px;
 	}
 	.ion-ios-menu:before {
 		content: "\f1c3";
@@ -617,7 +623,7 @@ page-category {
 		margin-top: 5px;
 	}
 	.searchbar-ios{
-		margin-top:6px;
+		margin-top:0px;
 	}
 	.ion-ios-menu:before {
 		content: "\f1c3";
@@ -705,7 +711,7 @@ page-category {
 						font-size: 15px;
 					}
 					.searchbar-ios{
-						margin-top:6px;
+						margin-top:0px;
 					}
 					.ion-ios-menu:before {
 						content: "\f1c3";
