@@ -32,7 +32,7 @@ Ionic pages and navigation.
 			<button ion-button (tap)="benefit(item.id)">{{ item.name }}</button>
 		</ion-item>
 	</ion-list>
-	<div *ngFor="let c of categories">
+		<div *ngFor="let c of categories">
 		<ion-list *ngIf="section == c.id">
 			<div style="margin-top: 0%;">
 				<ion-row text-center>
@@ -42,16 +42,16 @@ Ionic pages and navigation.
 				</ion-row>
 				<ion-card class="Border-card" *ngFor="let b of benefits">
 					<ion-item class="item-offert">
-						<ion-thumbnail item-start style="margin:0px;margin-top: 20px;">
+						<ion-thumbnail item-start style="margin:0px">
 							<img style="width: 50px;border-radius:50%;" src="data:image/png;base64,{{ b.image }}" #myImage (click)="presentImage(myImage)">
 						</ion-thumbnail>
-						<ion-card-content no-padding style="overflow: hidden; text-overflow: ellipsis;">
+						<ion-card-content no-padding text-wrap style="overflow: hidden; text-overflow: ellipsis;">
 							<button ion-fab icon-only *ngIf="see == 1 && b.bookmark == 0" (tap)="PostBenefit(b.id)">
 								<ion-icon name="bookmark" style="color: #fff;"></ion-icon>
 							</button>
 							<ion-icon name="bookmark" style="font-size: 30px" *ngIf="see == 1 && b.bookmark == 1" (tap)="UnpostBenefit(b.id)"></ion-icon>
-							<h2 class="title-offert" style="text-overflow: inherit;overflow: inherit;">{{ b.name }}</h2>
-							<p class="text-offert">{{ b.description }}</p>
+							<h2 class="title-offert" style="text-overflow: ellipsis;overflow:hidden;white-space: nowrap;">{{ b.name }}</h2>
+							<p class="text-offert"  style="white-space: nowrap;">{{ b.description }}</p>
 							<button ion-button class="button-offert" style="height: 1.8em;" color="bluep" item-end (tap)="benefit(b.id)">Ver Más</button>
 						</ion-card-content>
 					</ion-item>
