@@ -110,23 +110,23 @@ page-category {
 		width: 100%;
 		font-size: 1.4rem;
 	}
-		.title-offert{
-			font-size: 2rem !important;
-			font-family: Sueca-bold;
-			overflow: hidden; 
-			white-space: nowrap !important; 
-			text-overflow: ellipsis; 
-			display: inline-block;
-		}
-		.text-offert{
-			font-family: Sueca-bold;
-			white-space: nowrap !important;
-			word-break: break-all;
-			display: inline-block;
-			text-overflow: inherit;
-			overflow: inherit;
-			color: #4c4c4c;
-		}
+	.title-offert{
+		font-size: 2rem !important;
+		font-family: Sueca-bold;
+		overflow: hidden; 
+		white-space: nowrap !important; 
+		text-overflow: ellipsis; 
+	}
+	.content-line{
+	display:inline;
+}
+	.text-offert{
+		font-family: Sueca-bold;
+		text-overflow: ellipsis;
+		overflow:hidden;
+		white-space: nowrap !important;
+		color: #4c4c4c;
+	}
 	.card-content-md {
 		padding: 10px 0px;
 		font-size: 1.4rem;
@@ -221,23 +221,23 @@ page-category {
 			margin-top: 14px;
 			padding-left: 43px;
 		}
-		.title-offert{
-			font-size: 2rem !important;
-			font-family: Sueca-bold;
-			overflow: hidden; 
-			white-space: nowrap !important; 
-			text-overflow: ellipsis; 
-			display: inline-block;
-		}
-		.text-offert{
-			font-family: Sueca-bold;
-			white-space: nowrap !important;
-			word-break: break-all;
-			display: inline-block;
-			text-overflow: inherit;
-			overflow: inherit;
-			color: #4c4c4c;
-		}
+		// .title-offert{
+		// 	font-size: 2rem !important;
+		// 	font-family: Sueca-bold;
+		// 	overflow: hidden; 
+		// 	white-space: nowrap !important; 
+		// 	text-overflow: ellipsis; 
+		// 	display: inline-block;
+		// }
+		// .text-offert{
+		// 	font-family: Sueca-bold;
+		// 	white-space: nowrap !important;
+		// 	word-break: break-all;
+		// 	display: inline-block;
+		// 	text-overflow: inherit;
+		// 	overflow: inherit;
+		// 	color: #4c4c4c;
+		// }
 		.font-text{
 			font-size:27px;
 		}

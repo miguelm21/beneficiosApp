@@ -301,6 +301,9 @@ border-radius:2px;
 	font-weight: bold;
 	color: white;
 }
+.content-line{
+	display:inline;
+}
 .title-offert{
 	font-size: 2rem !important;
 	font-family: Sueca-bold;
@@ -309,7 +312,6 @@ border-radius:2px;
 	// line-clamp: 1; 
 	white-space: nowrap !important; 
 	text-overflow: ellipsis; 
-	display: inline-block;
 	// display: -webkit-box; 
 	// box-orient: vertical; 
 	// -webkit-line-clamp: 1; 
@@ -346,10 +348,8 @@ ion-avatar, ion-thumbnail {
 	font-family: Sueca-bold;
 	margin-top: -8px;
 	white-space: nowrap !important;
-	word-break: break-all;
-	display: inline-block;
-	text-overflow: inherit;
-	overflow: inherit;
+	text-overflow: ellipsis;
+	overflow: hidden;
 	color: #4c4c4c;
 }
 .item-offert{
@@ -1109,68 +1109,68 @@ hr {
 					.label-checkboxs{
 						font-size: 10px;
 					}
-					.text-offert{
-						font-family: Sueca-bold;
-						margin-top: -8px;
-						word-break: break-all;
-						display: inline-block;
-						text-overflow: ellipsis;
-						overflow: hidden; 
+					// .text-offert{
+						// 	font-family: Sueca-bold;
+						// 	margin-top: -8px;
+						// 	word-break: break-all;
+						// 	display: inline-block;
+						// 	text-overflow: ellipsis;
+						// 	overflow: hidden; 
+						// }
+						.searchbar-ios{
+							// margin-top:6px;
+						}
+						.ion-ios-menu:before {
+							content: "\f1c3";
+							font-size: 30px;
+							margin-top: -9px;
+							margin-left: -8px;
+						}
+						.club-logo{
+							width: 54%;
+							margin-left: 49px;
+							margin-top: 11px;
+						}
+						// Main-header End
+						// Page cercanos a Mi
+						.img-card{
+							width: 60px;
+							height: 60px;
+							border-radius:50%;
+							margin-left:0px;
+						}
+						.card-style{
+							margin-bottom:8%;
+						}
+						// Page cercanos a Mi End
+						// Page Search
+						.container img {
+							padding: 3%;
+						}
+						// Page Search End
+						// Page Novedades
+						.hr-novedades{
+							left: -124px;
+							top: 137px;
+							height: 2px;
+							width: 285px;
+						}
+						.container-novedades .img-noticias {
+							min-width: 270px;
+							max-width: 270px;
+							min-height: 162px;
+							max-height: 162px;
+						}
+						.title-background {
+							margin:auto;
+							width: 100%;
+							min-width:270px;
+						}
+						.social-row-style{
+							margin-left: 0px;
+						}
+						// Page Novedades End
 					}
-					.searchbar-ios{
-						// margin-top:6px;
-					}
-					.ion-ios-menu:before {
-						content: "\f1c3";
-						font-size: 30px;
-						margin-top: -9px;
-						margin-left: -8px;
-					}
-					.club-logo{
-						width: 54%;
-						margin-left: 49px;
-						margin-top: 11px;
-					}
-					// Main-header End
-					// Page cercanos a Mi
-					.img-card{
-						width: 60px;
-						height: 60px;
-						border-radius:50%;
-						margin-left:0px;
-					}
-					.card-style{
-						margin-bottom:8%;
-					}
-					// Page cercanos a Mi End
-					// Page Search
-					.container img {
-						padding: 3%;
-					}
-					// Page Search End
-					// Page Novedades
-					.hr-novedades{
-						left: -124px;
-						top: 137px;
-						height: 2px;
-						width: 285px;
-					}
-					.container-novedades .img-noticias {
-						min-width: 270px;
-						max-width: 270px;
-						min-height: 162px;
-						max-height: 162px;
-					}
-					.title-background {
-						margin:auto;
-						width: 100%;
-						min-width:270px;
-					}
-					.social-row-style{
-						margin-left: 0px;
-					}
-					// Page Novedades End
 				}
-			}
 
 
