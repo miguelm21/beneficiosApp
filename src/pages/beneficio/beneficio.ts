@@ -116,8 +116,10 @@ export class BeneficioPage {
   getData(id) {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner3.gif"/>'
+      content: '<img src="assets/spinner3.gif"/>',
+      dismissOnPageChange: true
     });
+
     loading.present();
 
     let headers = new Headers();

@@ -160,6 +160,9 @@ declare var map;
         this.sendNotification(); 
         /*this.SendMessage();*/
 
+        console.log(this.latitude);
+        console.log(this.longitude);
+
         this.interval = setInterval(() => { 
           this.getLocation(); 
           this.getMapData();
@@ -257,7 +260,6 @@ declare var map;
                 this.benefits = ben;
 
                 this.newsBenefs = data.newsBenefs;
-                console.log(this.news.length);
                 var n = [];
                 this.news2 = [];
                 for(var i = 0; i < this.news.length; i++)
@@ -280,8 +282,6 @@ declare var map;
 
                     this.news2.push({ id: data.id, title: data.title, text: data.text, image: data.image, mime: data.mime, size: data.size, user: data.user, day: day, month: monthNames[monthIndex] });
                 }
-
-                console.log(this.news2.length);
 
                 this.initMap(this.benefs,this.latitude, this.longitude);
                 /*console.log(this.news2);*/
@@ -321,7 +321,7 @@ declare var map;
         this.http.get(this.api + 'sendMessagePosition/'+this.latitude +'/'+ this.longitude +'/' + this.onesignalId, { headers: headers })
             .map(res => res.json())
             .subscribe(
-                data => { console.log(data) },
+                data => { },
                 err => {
                  
                     console.log('Ocurrio un error en la notificacion');
@@ -332,7 +332,6 @@ declare var map;
     }
   
     initMap(benefits, latitude, longitude) {
-        console.log(benefits);
         let markers = [];
         var Centro = { lat: latitude, lng: longitude };
 
@@ -410,8 +409,6 @@ declare var map;
           this.Checkbox.splice(index, 1);
         }
 
-        console.log(this.Km);
-
         if(typeof this.Checkbox !== 'undefined' && this.Checkbox.length > 0)
         {
       
@@ -432,12 +429,10 @@ declare var map;
             this.benefits = ben;
           }
           else {
-            console.log('a');
             var ben = [];
             benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
 
             benef[0].forEach((data) => {
-              console.log(data);
               var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
            
               if(this.Km <= 1) {
@@ -493,73 +488,89 @@ declare var map;
     }
 
     filterKmMap(latitude, longitude) {
-        clearInterval(this.interval);
-        if(typeof this.Checkbox !== 'undefined' && this.Checkbox.length > 0)
-        {
-            var benef = [];
-            benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
+      clearInterval(this.interval);
+      var benef = [];
 
-            if(this.Km) {
-                var ben = [];
-                var key = benef.shift();
+      if(typeof this.Checkbox !== 'undefined' && this.Checkbox.length > 0)
+      {
+    
+        if(this.Km) {
+          console.log('a');
+          var ben = [];
+          benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
 
-                key.forEach((data) => {
-                    var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
-                    if(this.Km < 1) {
-                        ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
-                        this.Km = 1;
-                    }
+          benef[0].forEach((data) => {
+            console.log(data);
+            var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
 
-                    if(distance <= this.Km) {
-                        ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
-                    }
-                });
-                if(this.Km < 1) {
-                    this.initMap(key, this.latitude, this.longitude);
-                    this.benefits = key;
-                }
-                console.log(ben);
-                this.initMap(ben, this.latitude, this.longitude);
-                this.benefits = ben;
+            if(distance <= this.Km) {
+              ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
             }
-            else {
-                var keys = benef.shift();
-                var ben = [];
-
-                keys.forEach((data) => {
-                    ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
-                });
-                this.initMap(ben, this.latitude, this.longitude);
-                this.benefits = ben;
-            }
+          });
+          
+          this.initMap(ben, this.latitude, this.longitude);
+          this.benefits = ben;
         }
-        else
-        {
-            if(this.Km)
-            {
-                var ben = [];
+        else {
+          console.log('b');
+          var ben = [];
+          benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
 
-                this.benefs.forEach((data) => {
-                    var distance = this.calculateDistance(this.latitude, this.longitude, data['latitude'], data['longitude']);
-                    if(this.Km < 1) {
-                        this.Km = 1;
-                        this.initMap(this.benefs, this.latitude, this.longitude);
-                    }
-
-                    if(distance <= this.Km) {
-                        ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
-                    }
-                });
-
-                this.initMap(ben, this.latitude, this.longitude);
-                this.benefits = ben;
+          benef[0].forEach((data) => {
+            var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+         
+            if(this.Km <= 1) {
+              ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image }); 
+              this.Km = 1;
             }
-            else
-            {
-                this.initMap(this.benefs, this.latitude, this.longitude);
-                this.benefits = this.benefs
-            }
+          });
+
+          this.initMap(ben, this.latitude, this.longitude);
+          this.benefits = ben;
         }
+        /*else {
+          var ben = []
+          benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
+
+          var key = benef.shift();
+          this.initMap(key, this.latitude, this.longitude);
+          this.benefits = key;
+        }*/
+      }
+      else
+      {
+        if(this.Km < 1) {
+          console.log('c');
+          var ben = [];
+
+          this.benefs.forEach((data) => {
+            var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+         
+            if(this.Km <= 1) {
+              ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image }); 
+              this.Km = 1;
+            }
+          });
+
+          this.initMap(ben, this.latitude, this.longitude);
+          this.benefits = ben;
+        }
+        else if(this.Km) {
+          console.log('d');
+          var ben = [];
+
+          this.benefs.forEach((data) => {
+            var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+
+            if(distance <= this.Km) {
+              ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+            }
+          });
+          
+          this.initMap(ben, this.latitude, this.longitude);
+          this.benefits = ben;
+        }
+      }
     }
 
     setMapOnAll(map, markers) {
