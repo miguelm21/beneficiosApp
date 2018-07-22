@@ -70,6 +70,7 @@ export class SaveBenefitsPage {
     });
 
     loading.present();
+    
     let headers = new Headers();
     /*headers.append('Content-Type', 'application/json');
     headers.append('X-Requested-With', 'XMLHttpRequest');*/

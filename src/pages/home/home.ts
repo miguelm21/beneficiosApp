@@ -410,52 +410,85 @@ declare var map;
           this.Checkbox.splice(index, 1);
         }
 
+        console.log(this.Km);
+
         if(typeof this.Checkbox !== 'undefined' && this.Checkbox.length > 0)
         {
+      
           if(this.Km) {
             var ben = [];
             benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
 
-            console.log(benef[0]);
-
             benef[0].forEach((data) => {
               console.log(data);
               var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
-           
-              if(this.Km < 1) {
-                ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image }); 
-                this.Km = 1;
-              }
 
               if(distance <= this.Km) {
                 ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
               }
             });
-            if(this.Km < 1) {
-              this.initMap(ben, this.latitude, this.longitude);
-              this.benefits = ben;
-              this.interval = setInterval(() => { 
-                this.getLocation(); 
-                this.getMapData();
-              }, 15000);
-            }
-            console.log(ben);
+            
             this.initMap(ben, this.latitude, this.longitude);
             this.benefits = ben;
           }
           else {
+            console.log('a');
+            var ben = [];
+            benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
+
+            benef[0].forEach((data) => {
+              console.log(data);
+              var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+           
+              if(this.Km <= 1) {
+                ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image }); 
+                this.Km = 1;
+              }
+            });
+
+            this.initMap(ben, this.latitude, this.longitude);
+            this.benefits = ben;
+          }
+          /*else {
             var ben = []
             benef.push(this.benefs.filter(item => this.Checkbox.some(f => f == item.category_id)))
 
             var key = benef.shift();
             this.initMap(key, this.latitude, this.longitude);
             this.benefits = key;
-          }
+          }*/
         }
         else
         {
-          this.initMap(this.benefs, this.latitude, this.longitude);
-          this.benefits = this.benefs;
+          if(this.Km < 1) {
+            var ben = [];
+
+            this.benefs.forEach((data) => {
+              var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+           
+              if(this.Km <= 1) {
+                ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image }); 
+                this.Km = 1;
+              }
+            });
+
+            this.initMap(ben, this.latitude, this.longitude);
+            this.benefits = ben;
+          }
+          else if(this.Km) {
+            var ben = [];
+
+            this.benefs.forEach((data) => {
+              var distance = this.calculateDistance(this.latitude, this.longitude, data.latitude, data.longitude);
+
+              if(distance <= this.Km) {
+                ben.push({ id: data.id, name: data.name, description: data.description, iconmap: data.iconmap, latitude: data.latitude, longitude: data.longitude, image: data.image });
+              }
+            });
+            
+            this.initMap(ben, this.latitude, this.longitude);
+            this.benefits = ben;
+          }
         }
     }
 

@@ -37,7 +37,7 @@
 			<ion-col col-12>
 				<ion-thumbnail class="tumb-img" item-start>
 					<h3 class="title-offer" text-center>{{ benefit?.name }}</h3>
-					<img class="img-beneficio" [src]="benefit?.image" #myImage (click)="presentImage(myImage)">
+					<img *ngIf="see == 1" class="img-beneficio" [src]="benefit?.image" #myImage (click)="presentImage(myImage)">
           <p class="text-offert" text-justify>{{ benefit?.description }}</p>
           <p class="text-offert" style="font-weight: 700;" text-center>{{ benefit?.percent }}% de Descuento</p>
 				</ion-thumbnail>

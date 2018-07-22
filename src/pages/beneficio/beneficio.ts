@@ -38,6 +38,7 @@ export class BeneficioPage {
   items;
   showList;
   token;
+  see: number = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -74,7 +75,7 @@ export class BeneficioPage {
     this.getData(id);
     this.initializeItems();
 
-    setTimeout(() => { this.getLocation(); this.getData(id); }, 5000);
+    setTimeout(() => { this.getLocation(); /*this.getData(id);*/ }, 5000);
 
   }
 
@@ -113,11 +114,11 @@ export class BeneficioPage {
     }
 
   getData(id) {
-    /*let loading = this.loadingCtrl.create({
+    let loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: '<img src="../../assets/spinner3.gif"/>'
     });
-    loading.present();*/
+    loading.present();
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -143,10 +144,9 @@ export class BeneficioPage {
           });*/
 
           this.benefit = a;
-          console.log(this.latitude);
-
+          loading.dismiss();
+          this.see = 1;
           this.initMap(this.benefit, this.latitude, this.longitude);
-          /*loading.dismiss();*/
         },
         err => {
           if (err.status == 401){
@@ -156,7 +156,7 @@ export class BeneficioPage {
           } else {
             this.toast('Ocurrio un error');
           }
-          /*loading.dismiss();*/
+          loading.dismiss();
         },
       );
   }
