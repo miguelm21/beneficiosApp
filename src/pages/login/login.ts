@@ -100,10 +100,10 @@ export class LoginPage {
                 this.toast('Inicie Sesion Nuevamente');
               } else if (err.status == 500) {
                 loading.dismiss();
-                this.toast('Error 1');
+                this.toast('Ocurrio un error al conectarse, intente de nuevo');
               } else {
                 loading.dismiss();
-                this.toast('Error 2');
+                this.toast('Ocurrio un error al conectarse, intente de nuevo');
               }   
             },
           );
@@ -164,10 +164,10 @@ export class LoginPage {
               this.toast('Inicie Sesion Nuevamente');
             } else if (err.status == 500) {
               loading.dismiss();
-              this.toast('Error 1');
+              this.toast('Ocurrio un error al conectarse, intente de nuevo');
             } else {
               loading.dismiss();
-              this.toast('Error 2');
+              this.toast('Ocurrio un error al conectarse, intente de nuevo');
             }   
           },
         );

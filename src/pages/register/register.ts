@@ -63,7 +63,7 @@ export class RegisterPage {
   ionViewDidLoad() {
     let loading = this.loadingCtrl.create({
       spinner: 'hide',
-      content: '<img src="../../assets/spinner2.gif"/>',
+      content: '<img src="assets/spinner2.gif"/>',
       dismissOnPageChange: true
     });
     loading.present();
@@ -143,10 +143,10 @@ export class RegisterPage {
                 this.toast('Inicie Sesion Nuevamente');
               } else if (err.status == 500) {
                 loading.dismiss();
-                this.toast('Error 1');
+                this.toast('Ocurrio un error al conectarse, intente de nuevo');
               } else {
                 loading.dismiss();
-                this.toast('Error 2');
+                this.toast('Ocurrio un error al conectarse, intente de nuevo');
               }   
             },
           );
@@ -207,10 +207,10 @@ export class RegisterPage {
               this.toast('Inicie Sesion Nuevamente');
             } else if (err.status == 500) {
               loading.dismiss();
-              this.toast('Error 1');
+              this.toast('Ocurrio un error al conectarse, intente de nuevo');
             } else {
               loading.dismiss();
-              this.toast('Error 2');
+              this.toast('Ocurrio un error al conectarse, intente de nuevo');
             }   
           },
         );
@@ -247,7 +247,7 @@ export class RegisterPage {
     {
       var loading = this.loadingCtrl.create({
         spinner: 'hide',
-        content: '<img src="../../assets/spinner3.gif"/>',
+        content: '<img src="assets/spinner3.gif"/>',
         dismissOnPageChange: false
       });
       loading.present();

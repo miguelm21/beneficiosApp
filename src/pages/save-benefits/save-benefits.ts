@@ -5,6 +5,7 @@ import { Http, Headers } from '@angular/http';
 import { Storage } from "@ionic/storage";
 
 import { LoginPage } from '../login/login';
+import { BeneficioPage } from '../beneficio/beneficio';
 
 /**
  * Generated class for the SaveBenefitsPage page.
@@ -105,6 +106,10 @@ export class SaveBenefitsPage {
   home(){
   	this.navCtrl.popToRoot();
   }
+
+  benefit(id, latitude, longitude){
+        this.navCtrl.push(BeneficioPage, {id: id, token: this.token, latitude: latitude, longitude: longitude });
+    }
 
   toast(message) {
     let toast = this.toastCtrl.create({
